@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --font-afacad: 'Afacad Flux', sans-serif;
+  --font-literata: 'Literata', serif;
+  --font-bodoni: 'Bodoni Moda', serif;
+  --font-roboto-condensed: 'Roboto Condensed', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  overflow-x: clip;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e1e;
+}
+
+/* Custom scrollbar matching dark aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* Custom #1E1E1E Pointer Cursor on Hover */
+.custom-orange-cursor,
+.custom-orange-cursor *,
+.custom-black-cursor,
+.custom-black-cursor *,
+#connect:hover,
+#connect:hover * {
+  cursor: url('/assets/cursor-view.png?v=5') 0 0, pointer !important;
+}
+
+#connect:hover .connect-you-badge {
+  display: none !important;
+}
+
+

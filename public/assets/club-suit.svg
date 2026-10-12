@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="189.404" height="220.847" viewBox="0 0 189.404 220.847" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Club suit" clip-path="url(#clip0_34_163)">
+<path id="Club stem" d="M84.5958 142.241H114.541C105.558 175.93 117.536 201.383 153.47 220.848H47.1641C82.3499 202.132 94.328 175.93 84.5958 142.241Z" fill="#080808"/>
+<ellipse id="Club leaf" cx="134.755" cy="128.392" rx="54.6503" ry="49.7841" fill="#080808"/>
+<ellipse id="Club leaf_2" cx="54.6503" cy="128.392" rx="54.6503" ry="49.7841" fill="#080808"/>
+<circle id="Club leaf_3" cx="99.569" cy="45.6667" r="45.6667" fill="#080808"/>
+<ellipse id="Club heart" cx="99.5688" cy="109.301" rx="29.1967" ry="41.9235" fill="#080808"/>
+</g>
+<defs>
+<clipPath id="clip0_34_163">
+<rect width="189.404" height="220.847" fill="white"/>
+</clipPath>
+</defs>
+</svg>
