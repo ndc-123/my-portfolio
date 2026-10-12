@@ -98,7 +98,7 @@ export default function App() {
 
   // Default: Homepage
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-white flex flex-col font-['Afacad_Flux']">
+    <div className="min-h-screen w-full bg-[#1e1e1e] text-white flex flex-col font-['Afacad_Flux'] overflow-x-clip">
       {/* 1. Header Navigation */}
       <Navbar onNavigate={navigate} />
 

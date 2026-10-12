@@ -154,7 +154,7 @@ export default function OutsideWorkSection() {
   };
 
   return (
-    <section id="about" className="w-full bg-[#1e1e1e] py-[90px] md:py-[120px] overflow-hidden relative z-20">
+    <section id="about" className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[120px] overflow-hidden relative z-20">
       
       {/* Table Background Texture (Checks) - extends 100% width edge-to-edge across the entire section */}
       <div 
@@ -169,11 +169,11 @@ export default function OutsideWorkSection() {
       />
 
       {/* Headings Container */}
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16 lg:px-[80px] mb-8 md:mb-12 relative z-10">
-        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[28px] sm:text-[34px] md:text-[40px] tracking-wide mb-2">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-16 lg:px-[80px] mb-8 md:mb-12 relative z-10">
+        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[34px] md:text-[40px] tracking-wide mb-2">
           Outside of work you’ll always find me capturing or creating
         </h2>
-        <p className="font-['Afacad_Flux'] font-normal text-[#b3a3a3] text-[18px] md:text-[20px]">
+        <p className="font-['Afacad_Flux'] font-normal text-[#b3a3a3] text-[17px] md:text-[20px]">
           Drag and hover
         </p>
       </div>
@@ -380,10 +380,10 @@ export default function OutsideWorkSection() {
       </div>
 
       {/* Tablet & Mobile Layout: Responsive Grid Collage */}
-      <div className="lg:hidden px-6 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-[700px] mx-auto relative z-10">
+      <div className="lg:hidden px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-[700px] mx-auto relative z-10">
         
         {/* Center Hero Card: About me */}
-        <div className="sm:col-span-2 relative w-[265px] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[10px] border-black shadow-2xl">
+        <div className="sm:col-span-2 relative w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[10px] border-black shadow-2xl">
           <img src="/assets/paper-highlights.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
           <img src="/assets/paper-fibers.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
           <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none z-20" />
@@ -399,7 +399,7 @@ export default function OutsideWorkSection() {
               href="https://www.instagram.com/nehadc_art/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-['Roboto_Condensed'] font-bold text-[12px] text-[#20201d] underline"
+              className="font-['Roboto_Condensed'] font-bold text-[12px] text-[#20201d] underline hover:opacity-80 transition-opacity"
             >
               Click here to view all creations
             </a>
@@ -407,23 +407,34 @@ export default function OutsideWorkSection() {
         </div>
 
         {/* Card 1 */}
-        <div className="w-[265px] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
-          <img src="/assets/outside-card-1.png" alt="" className="w-full h-full object-contain" />
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
+          <img src="/assets/outside-card-1.png" alt="Painting and art" className="w-full h-full object-contain" />
         </div>
 
         {/* Card 2 */}
-        <div className="w-[265px] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
-          <img src="/assets/outside-photo-237.png" alt="" className="w-full h-full object-cover rounded-[16.5px]" />
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
+          <img src="/assets/outside-photo-237.png" alt="Photography" className="w-full h-full object-cover rounded-[16.5px]" />
         </div>
 
         {/* Card 3 */}
-        <div className="w-[265px] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
-          <img src="/assets/outside-photo-236.png" alt="" className="w-full h-full object-cover rounded-[16.5px]" />
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
+          <img src="/assets/outside-photo-236.png" alt="Photography" className="w-full h-full object-cover rounded-[16.5px]" />
         </div>
 
         {/* Card 4 */}
-        <div className="w-[265px] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
-          <img src="/assets/outside-card-7.png" alt="" className="w-full h-full object-contain" />
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
+          <img src="/assets/outside-card-7.png" alt="Art and design creation" className="w-full h-full object-contain" />
+        </div>
+
+        {/* Card 5 (Tilted card on desktop) */}
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[8px] border-[#7d0f0f] shadow-lg relative">
+          <img src="/assets/outside-photo-240.png" alt="Artwork card" className="w-full h-full object-cover" />
+          <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none" />
+        </div>
+
+        {/* Card 6 (Lavender card on desktop) */}
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[rgba(185,166,244,0.66)] border-[6px] border-[#cfc1f1] shadow-lg relative">
+          <img src="/assets/outside-photo-4.png" alt="Creative work" className="w-full h-full object-cover" />
         </div>
 
       </div>

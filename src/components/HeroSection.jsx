@@ -2,17 +2,17 @@ import React from 'react';
 
 export default function HeroSection() {
   return (
-    <section className="w-full bg-[#1e1e1e] pt-[20px] md:pt-[45px] lg:pt-[70px] pb-[60px] md:pb-[90px] lg:pb-[140px] px-6 md:px-16 lg:px-[118px]">
-      <div className="max-w-[1240px] mx-auto flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-[60px] xl:gap-[182px]">
+    <section className="w-full bg-[#1e1e1e] pt-[20px] md:pt-[45px] lg:pt-[70px] pb-[60px] md:pb-[90px] lg:pb-[140px] px-4 sm:px-6 md:px-16 lg:px-[118px] overflow-hidden">
+      <div className="max-w-[1240px] mx-auto flex flex-col lg:flex-row items-center lg:items-center justify-between gap-10 md:gap-12 lg:gap-[60px] xl:gap-[182px]">
         
         {/* Left Column - Auto Layout (Frame 2147226205) */}
-        <div className="w-full lg:w-[554px] flex flex-col gap-[48px] items-start shrink-0">
+        <div className="w-full lg:w-[554px] flex flex-col gap-8 sm:gap-10 md:gap-[48px] items-start shrink-0">
           
           {/* Top text block (Frame 2147226204) */}
           <div className="w-full flex flex-col gap-[21px] items-start">
             
             {/* Badge & Title group (Frame 2147226203) */}
-            <div className="w-full sm:w-[355px] flex flex-col gap-[20px] items-start">
+            <div className="w-full sm:w-[355px] flex flex-col gap-4 sm:gap-[20px] items-start">
               
               {/* Badge: Hi, Neha here */}
               <div className="flex h-[35.69px] items-center justify-center">
@@ -26,13 +26,13 @@ export default function HeroSection() {
               </div>
 
               {/* Heading: UX Designer & Storyteller */}
-              <h1 className="font-['Afacad_Flux'] font-normal text-white text-[32px] sm:text-[35px] leading-tight h-[46px] flex items-center">
+              <h1 className="font-['Afacad_Flux'] font-normal text-white text-[28px] xs:text-[32px] sm:text-[35px] leading-tight min-h-[46px] h-auto flex items-center">
                 UX Designer &amp; Storyteller
               </h1>
             </div>
 
             {/* Tagline Paragraph */}
-            <p className="font-['Afacad_Flux'] font-normal text-white text-[24px] sm:text-[27px] leading-[1.18] max-w-[554px]">
+            <p className="font-['Afacad_Flux'] font-normal text-white text-[20px] xs:text-[22px] sm:text-[25px] md:text-[27px] leading-[1.25] sm:leading-[1.18] max-w-[554px]">
               From <strong className="font-bold">whys</strong> to <strong className="font-bold">what ifs</strong> I’m curious about people, systems, technology and learning whats new out there to create experiences that mean something.
             </p>
           </div>
@@ -40,15 +40,15 @@ export default function HeroSection() {
           {/* CTA Button: skip to work → */}
           <a
             href="#work"
-            className="inline-flex items-center justify-center border-2 border-[#f0e7e7] rounded-[10px] w-[245px] h-[57.65px] font-['Literata'] font-normal text-white text-[22.56px] hover:bg-white/10 transition-colors"
+            className="inline-flex items-center justify-center border-2 border-[#f0e7e7] rounded-[10px] w-full max-w-[245px] h-[52px] sm:h-[57.65px] font-['Literata'] font-normal text-white text-[20px] sm:text-[22.56px] hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
           >
             skip to work →
           </a>
         </div>
 
         {/* Right Column - Layered Polaroid Photo Stack & Pin (Group 6) */}
-        <div className="w-full lg:w-auto flex justify-center lg:justify-end shrink-0">
-          <div className="relative w-[310px] h-[360px] sm:w-[370px] sm:h-[420px] md:w-[440.11px] md:h-[490.18px] shrink-0 select-none scale-[0.72] sm:scale-[0.84] md:scale-100 origin-top lg:origin-top-right">
+        <div className="w-full lg:w-auto flex justify-center lg:justify-end shrink-0 max-w-full overflow-visible">
+          <div className="relative w-[270px] h-[310px] scale-[0.61] xs:w-[310px] xs:h-[360px] xs:scale-[0.72] sm:w-[370px] sm:h-[420px] sm:scale-[0.84] md:w-[440.11px] md:h-[490.18px] md:scale-100 shrink-0 select-none origin-top lg:origin-top-right transition-transform duration-300">
             
             {/* Bottom Layer - Light Grey Card */}
             <div 
@@ -69,7 +69,7 @@ export default function HeroSection() {
               {/* Photo with exact Figma crop and positioning */}
               <img 
                 src="/assets/hero-portrait.png" 
-                alt="Neha Chaware" 
+                alt="Neha Chaware portrait" 
                 className="absolute pointer-events-none max-w-none"
                 style={{
                   width: '798.66px',

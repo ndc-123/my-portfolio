@@ -124,7 +124,7 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
       </div>
 
       {/* 2. Main Case Study Layout (Sticky Sidebar + Image Track) */}
-      <div className="w-full pt-3 lg:pt-5 pb-8 pl-3 sm:pl-5 lg:pl-6 xl:pl-8 pr-2 sm:pr-3 lg:pr-3 xl:pr-5 flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8 relative items-start">
+      <div className="w-full pt-3 lg:pt-5 pb-8 pl-2 sm:pl-5 lg:pl-6 xl:pl-8 pr-2 sm:pr-3 lg:pr-3 xl:pr-5 flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8 relative items-start">
         
         {/* Left Sticky Sidebar (Desktop) */}
         <aside className="hidden lg:flex flex-col w-[200px] xl:w-[220px] shrink-0 sticky top-5 self-start py-1 z-30">
@@ -132,21 +132,21 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
           {/* Back Link */}
           <button
             onClick={() => onNavigate('/#work')}
-            className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[16px] xl:text-[17px] mb-4 group self-start"
+            className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[16px] xl:text-[17px] mb-4 group self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
             <span className="transform group-hover:-translate-x-1 transition-transform text-[18px]">←</span>
             <span>Selected Work</span>
           </button>
 
           {/* Section Navigation Links (Max 5) */}
-          <nav className="flex flex-col relative border-l border-white/10 pl-3.5 space-y-1.5">
+          <nav className="flex flex-col relative border-l border-white/10 pl-3.5 space-y-1.5" aria-label="Case study sections">
             {project.sections.map((section, idx) => {
               const isActive = activeSection === section.id;
               return (
                 <button
                   key={section.id}
                   onClick={() => handleScrollToSection(section.id)}
-                  className={`text-left text-[15.5px] xl:text-[16.5px] py-1 transition-all relative flex items-start group ${
+                  className={`text-left text-[15.5px] xl:text-[16.5px] py-1 transition-all relative flex items-start group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm ${
                     isActive
                       ? 'text-white font-medium'
                       : 'text-white/40 hover:text-white/80'
@@ -208,10 +208,10 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
           ))}
 
           {/* Bottom Project Switcher & Back to Top */}
-          <div className="w-full mt-8 pt-6 pb-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="w-full mt-8 pt-6 pb-2 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
             <button
               onClick={() => onNavigate('/#work')}
-              className="px-5 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[15px] transition-colors flex items-center gap-2"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[15px] transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             >
               <span>← Selected Work</span>
             </button>
@@ -221,10 +221,10 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
                 onNavigate(`/projects/${nextProject.id}`);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="px-5 py-2.5 rounded-lg bg-white text-[#1e1e1e] hover:bg-gray-100 font-medium text-[15px] transition-colors flex items-center gap-2"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-white text-[#1e1e1e] hover:bg-gray-100 font-medium text-[15px] transition-colors flex items-center justify-between sm:justify-start gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             >
-              <span>Next Project: {nextProject.title}</span>
-              <span>→</span>
+              <span className="truncate">Next Project: {nextProject.title}</span>
+              <span className="shrink-0">→</span>
             </button>
           </div>
         </main>
@@ -239,7 +239,7 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
         type="button"
         onClick={handleScrollToTop}
         aria-label="Back to top"
-        className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center gap-2 px-3.5 py-2 md:px-4 md:py-2.5 rounded-full bg-[#1e1e1e]/90 hover:bg-[#2a2a2a] text-white border border-white/20 hover:border-white/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 font-['Afacad_Flux'] text-[13.5px] md:text-[14.5px] group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/40 ${
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-50 flex items-center gap-2 px-3.5 py-2 md:px-4 md:py-2.5 rounded-full bg-[#1e1e1e]/90 hover:bg-[#2a2a2a] text-white border border-white/20 hover:border-white/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 font-['Afacad_Flux'] text-[13.5px] md:text-[14.5px] group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/40 ${
           showBackToTop
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 translate-y-4 pointer-events-none'

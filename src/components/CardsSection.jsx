@@ -410,7 +410,7 @@ export default function CardsSection() {
   return (
     <section 
       id="about"
-      className="relative w-full bg-[#1e1e1e] py-[80px] lg:py-[114px] px-6 md:px-16 lg:px-[114px] overflow-hidden"
+      className="relative w-full bg-[#1e1e1e] py-[70px] sm:py-[80px] lg:py-[114px] px-4 sm:px-6 md:px-16 lg:px-[114px] overflow-hidden"
     >
       {/* Background Dust Texture */}
       <div 
@@ -419,10 +419,10 @@ export default function CardsSection() {
         aria-hidden="true"
       />
 
-      <div className="relative max-w-[1240px] mx-auto z-10 flex flex-col gap-[69px] items-start">
+      <div className="relative max-w-[1240px] mx-auto z-10 flex flex-col gap-8 sm:gap-12 md:gap-[69px] items-start">
         
         {/* Section Heading (Afacad Flux 33.7px) */}
-        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[28px] md:text-[33.7px] tracking-wide">
+        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] xs:text-[28px] sm:text-[30px] md:text-[33.7px] tracking-wide">
           Cards I bring to the table
         </h2>
 
@@ -507,8 +507,9 @@ export default function CardsSection() {
         </div>
 
         {/* Responsive Layout for Tablets / Mobile: Flippable on hover / tap */}
-        <div className="xl:hidden flex flex-wrap md:flex-nowrap gap-6 overflow-x-auto pb-6 scrollbar-thin w-full">
+        <div className="xl:hidden flex flex-wrap justify-center sm:justify-start md:flex-nowrap gap-6 overflow-x-auto pb-6 pt-2 px-1 scrollbar-thin snap-x snap-mandatory w-full max-w-full">
           <FlippableCard
+            className="snap-center"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -532,6 +533,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            className="snap-center"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -555,6 +557,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            className="snap-center"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -578,6 +581,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            className="snap-center"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -601,6 +605,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            className="snap-center"
             front={
               <PlayingCard
                 bg="#cfb99d"

@@ -105,12 +105,52 @@ export default function OtherDomainsSection() {
   const activeCard = DOMAIN_CARDS[activeRealIndex];
 
   // Dynamic layout calculations for smooth horizontal conveyor centering
+  const isSmallMobile = containerWidth < 400;
   const isMobile = containerWidth < 768;
-  const cardWidth = isMobile ? 290 : 381;
-  const cardHeight = isMobile ? 232 : 306;
-  const gap = isMobile ? 20 : 32;
+  const cardWidth = isSmallMobile
+    ? Math.max(220, Math.round(containerWidth * 0.72))
+    : isMobile
+    ? Math.min(290, Math.round(containerWidth * 0.75))
+    : 381;
+  const cardHeight = Math.round(cardWidth * (306 / 381));
+  const gap = isMobile ? (isSmallMobile ? 14 : 20) : 32;
   const step = cardWidth + gap;
   const translateX = containerWidth / 2 - (currentIndex * step + cardWidth / 2);
+
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+  const isSwipingRef = useRef(false);
+
+  const handleTouchStart = (e) => {
+    setIsPaused(true);
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+    isSwipingRef.current = false;
+  };
+
+  const handleTouchMove = (e) => {
+    const deltaX = e.touches[0].clientX - touchStartXRef.current;
+    const deltaY = e.touches[0].clientY - touchStartYRef.current;
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+      isSwipingRef.current = true;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (isSwipingRef.current) {
+      const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+      if (deltaX < -30) {
+        // Swiped left -> advance
+        setWithTransition(true);
+        setCurrentIndex((prev) => prev + 1);
+      } else if (deltaX > 30) {
+        // Swiped right -> go back
+        setWithTransition(true);
+        setCurrentIndex((prev) => Math.max(0, prev - 1));
+      }
+    }
+    setTimeout(() => setIsPaused(false), 2000);
+  };
 
   const handleCardClick = (index) => {
     setWithTransition(true);
@@ -118,7 +158,7 @@ export default function OtherDomainsSection() {
   };
 
   return (
-    <section className="w-full bg-[#1e1e1e] py-[90px] md:py-[130px] px-6 md:px-16 lg:px-[64px] overflow-hidden">
+    <section className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[130px] px-4 sm:px-6 md:px-16 lg:px-[64px] overflow-hidden">
       {/* Scoped CSS animation for smooth, flicker-free label cross-fade */}
       <style>{`
         @keyframes domainLabelFade {
@@ -130,16 +170,19 @@ export default function OtherDomainsSection() {
       <div className="max-w-[1312px] mx-auto flex flex-col items-center">
         
         {/* Section Heading (Afacad Flux 50px) */}
-        <h2 className="w-full text-left font-['Afacad_Flux'] font-normal text-white text-[32px] sm:text-[40px] md:text-[50px] leading-tight mb-[78px]">
+        <h2 className="w-full text-left font-['Afacad_Flux'] font-normal text-white text-[28px] sm:text-[38px] md:text-[50px] leading-tight mb-8 sm:mb-12 md:mb-[78px]">
           Check out other domains I’ve explored
         </h2>
 
-        {/* Carousel Viewport Container */}
+        {/* Carousel Viewport Container with Touch Swiping */}
         <div 
           ref={containerRef}
-          className="relative w-full max-w-[1312px] h-[360px] select-none flex items-center justify-center overflow-hidden"
+          className="relative w-full max-w-[1312px] h-[280px] sm:h-[320px] md:h-[360px] select-none flex items-center justify-center overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {/* Continuous Horizontal Moving Track */}
           <div
@@ -202,7 +245,7 @@ export default function OtherDomainsSection() {
         <div className="w-full flex justify-center mt-6 h-[48px] items-center">
           <p
             key={activeCard.id}
-            className="font-['Afacad_Flux'] font-normal text-white text-[28px] sm:text-[32px] tracking-normal select-none"
+            className="font-['Afacad_Flux'] font-normal text-white text-[24px] sm:text-[28px] md:text-[32px] tracking-normal select-none"
             style={{ animation: 'domainLabelFade 280ms ease-out' }}
           >
             {activeCard.title}

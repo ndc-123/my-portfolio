@@ -45,18 +45,41 @@ body {
   background: #555555;
 }
 
-/* Custom #1E1E1E Pointer Cursor on Hover */
-.custom-orange-cursor,
-.custom-orange-cursor *,
-.custom-black-cursor,
-.custom-black-cursor *,
-#connect:hover,
-#connect:hover * {
-  cursor: url('/assets/cursor-view.png?v=5') 0 0, pointer !important;
+/* Custom #1E1E1E Pointer Cursor on Hover (pointer devices only) */
+@media (hover: hover) and (pointer: fine) {
+  .custom-orange-cursor,
+  .custom-orange-cursor *,
+  .custom-black-cursor,
+  .custom-black-cursor *,
+  #connect:hover,
+  #connect:hover * {
+    cursor: url('/assets/cursor-view.png?v=5') 0 0, pointer !important;
+  }
+
+  #connect:hover .connect-you-badge {
+    display: none !important;
+  }
 }
 
-#connect:hover .connect-you-badge {
-  display: none !important;
+/* Hide scrollbar utility for clean horizontal swipe tracks */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 
