@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// Exact initial positions and dimensions of the 8 desktop collage cards
+// Exact initial positions and dimensions of the 8 desktop collage cards (based on 1440px canvas)
 const INITIAL_CARDS = [
   { id: 'card-1', initLeft: 35.7, initTop: 36.52, width: 315.5, height: 416, defaultZ: 10 },
   { id: 'card-2', initLeft: 351, initTop: 128, width: 359, height: 441.5, defaultZ: 10 },
@@ -14,7 +14,9 @@ const INITIAL_CARDS = [
 
 export default function OutsideWorkSection() {
   const boardRef = useRef(null);
-  const [containerWidth, setContainerWidth] = useState(1440);
+  const [containerWidth, setContainerWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1440
+  );
   const [positions, setPositions] = useState({});
   const [zIndices, setZIndices] = useState({});
   const [draggingId, setDraggingId] = useState(null);
@@ -28,6 +30,8 @@ export default function OutsideWorkSection() {
     const updateSize = () => {
       if (boardRef.current) {
         setContainerWidth(boardRef.current.offsetWidth);
+      } else if (typeof window !== 'undefined') {
+        setContainerWidth(window.innerWidth);
       }
     };
     updateSize();
@@ -35,8 +39,27 @@ export default function OutsideWorkSection() {
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  // Centering offset for viewports wider than 1440px
+  // Scale factor for tablet / desktop board (768px - 1440px+)
+  const scale = containerWidth < 1440 ? Math.max(0.53, containerWidth / 1440) : 1;
+  const boardHeight = Math.round(1024 * scale);
   const baseOffsetX = Math.max(0, (containerWidth - 1440) / 2);
+
+  // Compute card default position clamped safely inside the visible board
+  const getCardDefaultPos = (cardId) => {
+    const card = INITIAL_CARDS.find((c) => c.id === cardId);
+    if (!card) return { x: 0, y: 0 };
+
+    const cardW = card.width * scale;
+    const cardH = card.height * scale;
+    const maxX = Math.max(0, containerWidth - cardW - 12);
+    const maxY = Math.max(0, boardHeight - cardH - 12);
+
+    const rawX = containerWidth >= 1440 ? card.initLeft + baseOffsetX : card.initLeft * scale;
+    const defaultX = Math.max(6, Math.min(rawX, maxX));
+    const defaultY = Math.max(6, Math.min(card.initTop * scale, maxY));
+
+    return { x: defaultX, y: defaultY, cardW, cardH, maxX, maxY };
+  };
 
   const handlePointerDown = (cardId, e) => {
     if (e.button !== undefined && e.button !== 0) return;
@@ -48,11 +71,8 @@ export default function OutsideWorkSection() {
       [cardId]: topZIndexRef.current,
     }));
 
-    const card = INITIAL_CARDS.find((c) => c.id === cardId);
-    const currentPos = positions[cardId] || {
-      x: card.initLeft + baseOffsetX,
-      y: card.initTop,
-    };
+    const cardInfo = getCardDefaultPos(cardId);
+    const currentPos = positions[cardId] || { x: cardInfo.x, y: cardInfo.y };
 
     activeDragRef.current = {
       cardId,
@@ -61,58 +81,51 @@ export default function OutsideWorkSection() {
       startPointerY: e.clientY,
       startCardX: currentPos.x,
       startCardY: currentPos.y,
+      maxX: cardInfo.maxX,
+      maxY: cardInfo.maxY,
       hasMoved: false,
     };
 
     setDraggingId(cardId);
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-  };
 
-  const handlePointerMove = (cardId, e) => {
-    if (!activeDragRef.current || activeDragRef.current.cardId !== cardId) return;
+    const onPointerMove = (moveEvt) => {
+      if (!activeDragRef.current || activeDragRef.current.cardId !== cardId) return;
+      const drag = activeDragRef.current;
+      const dx = moveEvt.clientX - drag.startPointerX;
+      const dy = moveEvt.clientY - drag.startPointerY;
 
-    const drag = activeDragRef.current;
-    const dx = e.clientX - drag.startPointerX;
-    const dy = e.clientY - drag.startPointerY;
+      if (!drag.hasMoved && Math.hypot(dx, dy) > 4) {
+        drag.hasMoved = true;
+      }
 
-    if (!drag.hasMoved && Math.hypot(dx, dy) > 4) {
-      drag.hasMoved = true;
-    }
+      const targetX = drag.startCardX + dx;
+      const targetY = drag.startCardY + dy;
+      const clampedX = Math.max(0, Math.min(targetX, drag.maxX));
+      const clampedY = Math.max(0, Math.min(targetY, drag.maxY));
 
-    const card = INITIAL_CARDS.find((c) => c.id === cardId);
-    const bWidth = boardRef.current ? boardRef.current.offsetWidth : containerWidth;
-    const bHeight = boardRef.current ? boardRef.current.offsetHeight : 1024;
-    const maxX = Math.max(0, bWidth - card.width);
-    const maxY = Math.max(0, bHeight - card.height);
+      setPositions((prev) => ({
+        ...prev,
+        [drag.cardId]: { x: clampedX, y: clampedY },
+      }));
+    };
 
-    const targetX = drag.startCardX + dx;
-    const targetY = drag.startCardY + dy;
+    const onPointerUp = () => {
+      if (activeDragRef.current?.hasMoved) {
+        justDraggedRef.current = true;
+        setTimeout(() => {
+          justDraggedRef.current = false;
+        }, 120);
+      }
+      activeDragRef.current = null;
+      setDraggingId(null);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
+    };
 
-    const clampedX = Math.max(0, Math.min(targetX, maxX));
-    const clampedY = Math.max(0, Math.min(targetY, maxY));
-
-    setPositions((prev) => ({
-      ...prev,
-      [cardId]: { x: clampedX, y: clampedY },
-    }));
-  };
-
-  const handlePointerUp = (cardId, e) => {
-    if (!activeDragRef.current || activeDragRef.current.cardId !== cardId) return;
-
-    if (activeDragRef.current.hasMoved) {
-      justDraggedRef.current = true;
-      setTimeout(() => {
-        justDraggedRef.current = false;
-      }, 100);
-    }
-
-    try {
-      e.currentTarget.releasePointerCapture?.(e.pointerId);
-    } catch {}
-
-    activeDragRef.current = null;
-    setDraggingId(null);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
   };
 
   const handleInstagramClick = (e) => {
@@ -122,25 +135,15 @@ export default function OutsideWorkSection() {
     }
   };
 
-  const dragProps = (cardId) => ({
-    onPointerDown: (e) => handlePointerDown(cardId, e),
-    onPointerMove: (e) => handlePointerMove(cardId, e),
-    onPointerUp: (e) => handlePointerUp(cardId, e),
-    onPointerCancel: (e) => handlePointerUp(cardId, e),
-  });
-
-  const getCardStyle = (cardId, width, height, defaultZ) => {
-    const card = INITIAL_CARDS.find((c) => c.id === cardId);
-    const pos = positions[cardId] || {
-      x: card.initLeft + baseOffsetX,
-      y: card.initTop,
-    };
+  const getCardStyle = (cardId, defaultZ) => {
+    const cardInfo = getCardDefaultPos(cardId);
+    const pos = positions[cardId] || { x: cardInfo.x, y: cardInfo.y };
     const zIndex = zIndices[cardId] || defaultZ;
     const isDragging = draggingId === cardId;
 
     return {
-      width: `${width}px`,
-      height: `${height}px`,
+      width: `${cardInfo.cardW}px`,
+      height: `${cardInfo.cardH}px`,
       left: 0,
       top: 0,
       transform: `translate3d(${pos.x}px, ${pos.y}px, 0px)${isDragging ? ' scale(1.02)' : ''}`,
@@ -156,7 +159,7 @@ export default function OutsideWorkSection() {
   return (
     <section id="about" className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[120px] overflow-hidden relative z-20">
       
-      {/* Table Background Texture (Checks) - extends 100% width edge-to-edge across the entire section */}
+      {/* Table Background Texture (Checks) - extends 100% width edge-to-edge */}
       <div 
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ 
@@ -169,8 +172,8 @@ export default function OutsideWorkSection() {
       />
 
       {/* Headings Container */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-16 lg:px-[80px] mb-8 md:mb-12 relative z-10">
-        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[34px] md:text-[40px] tracking-wide mb-2">
+      <div className="max-w-[1440px] xl:max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[80px] mb-8 md:mb-12 relative z-10">
+        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[34px] md:text-[40px] tracking-wide mb-2 leading-tight">
           Outside of work you’ll always find me capturing or creating
         </h2>
         <p className="font-['Afacad_Flux'] font-normal text-[#b3a3a3] text-[17px] md:text-[20px]">
@@ -178,17 +181,18 @@ export default function OutsideWorkSection() {
         </p>
       </div>
 
-      {/* Collage Board Desktop - 100% width edge-to-edge with interactive draggable cards */}
+      {/* Interactive Collage Board for Tablet & Desktop (>= 768px) */}
       <div 
         ref={boardRef}
-        className="hidden lg:block relative w-full h-[1024px] overflow-hidden select-none"
+        style={{ height: `${boardHeight}px` }}
+        className="hidden md:block relative w-full overflow-hidden select-none"
       >
         
-        {/* Card 1 (Top Left) - image 236 (node 53:493) */}
+        {/* Card 1 (Top Left Photo) */}
         <div 
-          {...dragProps('card-1')}
+          onPointerDown={(e) => handlePointerDown('card-1', e)}
           className="absolute rounded-[16.5px] select-none"
-          style={getCardStyle('card-1', 315.5, 416, 10)}
+          style={getCardStyle('card-1', 10)}
         >
           <img 
             src="/assets/outside-photo-236.png" 
@@ -197,11 +201,11 @@ export default function OutsideWorkSection() {
           />
         </div>
 
-        {/* Card 2 (Mid Left) - image 230 (node 50:405) */}
+        {/* Card 2 (Mid Left Art) */}
         <div 
-          {...dragProps('card-2')}
+          onPointerDown={(e) => handlePointerDown('card-2', e)}
           className="absolute select-none"
-          style={getCardStyle('card-2', 359, 441.5, 10)}
+          style={getCardStyle('card-2', 10)}
         >
           <img 
             src="/assets/outside-card-7.png" 
@@ -210,11 +214,11 @@ export default function OutsideWorkSection() {
           />
         </div>
 
-        {/* Card 3 (Top Right) - image 232 (node 50:411) */}
+        {/* Card 3 (Top Right Painting) */}
         <div 
-          {...dragProps('card-3')}
+          onPointerDown={(e) => handlePointerDown('card-3', e)}
           className="absolute select-none"
-          style={getCardStyle('card-3', 359, 443.5, 10)}
+          style={getCardStyle('card-3', 10)}
         >
           <img 
             src="/assets/outside-card-1.png" 
@@ -223,106 +227,77 @@ export default function OutsideWorkSection() {
           />
         </div>
 
-        {/* Card 4 (Far Right Playing Card) - node 53:502 with image 238 & 239 */}
+        {/* Card 4 (Far Right Playing Card) */}
         <div 
-          {...dragProps('card-4')}
+          onPointerDown={(e) => handlePointerDown('card-4', e)}
           className="absolute bg-[#f6e0c5] border-[10px] border-black rounded-[16.47px] overflow-hidden select-none shadow-lg"
-          style={getCardStyle('card-4', 265.02, 372.07, 10)}
+          style={getCardStyle('card-4', 10)}
         >
-          {/* Paper Texture and highlights */}
-          <img 
-            src="/assets/paper-texture-card.png" 
-            alt="" 
-            className="absolute inset-0 size-full object-cover pointer-events-none" 
-          />
-          <img 
-            src="/assets/paper-highlights.svg" 
-            alt="" 
-            className="absolute inset-0 size-full pointer-events-none opacity-80" 
-          />
-          <img 
-            src="/assets/paper-fibers.svg" 
-            alt="" 
-            className="absolute inset-0 size-full pointer-events-none opacity-80" 
-          />
-
-          {/* Lower image 239 */}
-          <div className="absolute left-0 top-[186px] w-[265px] h-[245px] pointer-events-none">
-            <img 
-              src="/assets/outside-photo-239.png" 
-              alt="Artwork collage" 
-              className="w-full h-full object-cover pointer-events-none" 
-            />
-          </div>
-
-          {/* Upper image 238 */}
-          <div className="absolute left-0 top-[-2px] w-[248px] h-[186px] pointer-events-none">
-            <img 
-              src="/assets/outside-photo-238.png" 
-              alt="Artwork" 
-              className="w-full h-full object-cover pointer-events-none" 
-            />
-          </div>
-
-          {/* Aged Edges Overlay */}
-          <img 
-            src="/assets/aged-edges-scuffs.svg" 
-            alt="" 
-            className="absolute inset-[-8px] w-[280px] h-[391px] pointer-events-none" 
-          />
-        </div>
-
-        {/* Center Hero Card: About me (Ace of Spades, node 5:261) */}
-        <div 
-          {...dragProps('card-5')}
-          className="absolute rounded-[16.47px] overflow-hidden bg-[#f6e0c5] border-[10px] border-black shadow-2xl select-none"
-          style={getCardStyle('card-5', 265.02, 372.07, 30)}
-        >
-          {/* Highlights & Fibers Texture */}
+          <img src="/assets/paper-texture-card.png" alt="" className="absolute inset-0 size-full object-cover pointer-events-none" />
           <img src="/assets/paper-highlights.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
           <img src="/assets/paper-fibers.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
-          <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-[-8px] w-[280px] h-[391px] pointer-events-none z-20" />
 
-          {/* Top Left Ace Rank */}
-          <span className="absolute left-[6px] top-[-2px] font-['Bodoni_Moda'] font-bold text-[45px] text-[#20201d] leading-none z-10 pointer-events-none">
-            A
-          </span>
+          <div className="absolute left-0 top-[48%] w-full h-[52%] pointer-events-none">
+            <img src="/assets/outside-photo-239.png" alt="Artwork collage" className="w-full h-full object-cover pointer-events-none" />
+          </div>
 
-          {/* Bottom Right Ace Rank (Inverted) */}
-          <span className="absolute right-[6px] bottom-[-2px] font-['Bodoni_Moda'] font-bold text-[45px] text-[#20201d] leading-none rotate-180 z-10 pointer-events-none">
-            A
-          </span>
+          <div className="absolute left-0 top-0 w-full h-[50%] pointer-events-none">
+            <img src="/assets/outside-photo-238.png" alt="Artwork" className="w-full h-full object-cover pointer-events-none" />
+          </div>
 
-          {/* Title: About me */}
-          <p className="font-['Afacad_Flux'] font-normal text-[#080808] text-[26.2px] text-center mt-6 pointer-events-none">
-            About me
-          </p>
+          <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none" />
+        </div>
+
+        {/* Center Hero Card: About me (Ace of Spades) */}
+        <div 
+          onPointerDown={(e) => handlePointerDown('card-5', e)}
+          className="absolute rounded-[16.47px] overflow-hidden bg-[#f6e0c5] border-[8px] lg:border-[10px] border-black shadow-2xl select-none flex flex-col justify-between"
+          style={getCardStyle('card-5', 30)}
+        >
+          <img src="/assets/paper-highlights.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
+          <img src="/assets/paper-fibers.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
+          <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none z-20" />
+
+          {/* Top Row: Rank & Title */}
+          <div className="relative z-10 pt-2 px-3">
+            <span className="font-['Bodoni_Moda'] font-bold text-[36px] lg:text-[45px] text-[#20201d] leading-none pointer-events-none">
+              A
+            </span>
+            <p className="font-['Afacad_Flux'] font-normal text-[#080808] text-[20px] lg:text-[26.2px] text-center -mt-6 pointer-events-none">
+              About me
+            </p>
+          </div>
 
           {/* Ornamental Ace Emblem */}
-          <div className="w-[137px] h-[160px] mx-auto my-2 flex items-center justify-center pointer-events-none">
+          <div className="relative z-10 w-[55%] h-[40%] mx-auto flex items-center justify-center pointer-events-none">
             <img src="/assets/ace-emblem.svg" alt="Ace Emblem" className="size-full object-contain pointer-events-none" />
           </div>
 
-          {/* Instagram Link */}
-          <div className="absolute bottom-[20px] left-0 right-0 flex items-center justify-center gap-2 z-30">
-            <img src="/assets/instagram.svg" alt="Instagram" className="size-[17px] pointer-events-none" />
-            <a 
-              href="https://www.instagram.com/nehadc_art/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleInstagramClick}
-              className="font-['Roboto_Condensed'] font-bold text-[12px] text-[#20201d] underline hover:opacity-80 transition-opacity cursor-pointer"
-            >
-              Click here to view all creations
-            </a>
+          {/* Bottom Row: Instagram Link & Inverted Rank */}
+          <div className="relative z-30 pb-3 px-3 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 mx-auto">
+              <img src="/assets/instagram.svg" alt="Instagram" className="size-[15px] pointer-events-none" />
+              <a 
+                href="https://www.instagram.com/nehadc_art/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleInstagramClick}
+                className="font-['Roboto_Condensed'] font-bold text-[11px] lg:text-[12px] text-[#20201d] underline hover:opacity-80 transition-opacity cursor-pointer"
+              >
+                Click here to view all creations
+              </a>
+            </div>
+            <span className="font-['Bodoni_Moda'] font-bold text-[36px] lg:text-[45px] text-[#20201d] leading-none rotate-180 pointer-events-none absolute right-3 bottom-2">
+              A
+            </span>
           </div>
         </div>
 
-        {/* Card 6 (Bottom Left Photo) - image 237 (node 53:499) */}
+        {/* Card 6 (Bottom Left Photo) */}
         <div 
-          {...dragProps('card-6')}
+          onPointerDown={(e) => handlePointerDown('card-6', e)}
           className="absolute select-none"
-          style={getCardStyle('card-6', 305.5, 411, 10)}
+          style={getCardStyle('card-6', 10)}
         >
           <img 
             src="/assets/outside-photo-237.png" 
@@ -331,108 +306,120 @@ export default function OutsideWorkSection() {
           />
         </div>
 
-        {/* Card 7 (Bottom Mid Tilted Card) - node 53:538 with image 240 */}
+        {/* Card 7 (Bottom Mid Tilted Card) */}
         <div 
-          {...dragProps('card-7')}
+          onPointerDown={(e) => handlePointerDown('card-7', e)}
           className="absolute flex items-center justify-center select-none"
-          style={getCardStyle('card-7', 380.8, 442.35, 10)}
+          style={getCardStyle('card-7', 10)}
         >
-          <div className="rotate-[-21.01deg] pointer-events-none">
-            <div className="bg-[#f6e0c5] border-[10px] border-[#7d0f0f] border-solid w-[265.02px] h-[372.07px] overflow-hidden relative rounded-[16.47px] shadow-[6px_13px_4px_0px_rgba(0,0,0,0.25)]">
-              {/* Rotated image 240 inside */}
-              <div className="absolute flex h-[513.43px] items-center justify-center left-[-140px] top-[-69px] w-[489.18px]">
-                <div className="flex-none rotate-[-8.76deg]">
-                  <div className="w-[425px] h-[454px] relative">
-                    <img 
-                      src="/assets/outside-photo-240.png" 
-                      alt="Artwork card" 
-                      className="absolute inset-0 size-full object-cover pointer-events-none" 
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Aged Edges Overlay */}
+          <div className="rotate-[-21.01deg] pointer-events-none w-[75%] h-[85%]">
+            <div className="bg-[#f6e0c5] border-[8px] lg:border-[10px] border-[#7d0f0f] border-solid size-full overflow-hidden relative rounded-[16.47px] shadow-[6px_13px_4px_0px_rgba(0,0,0,0.25)]">
+              <img 
+                src="/assets/outside-photo-240.png" 
+                alt="Artwork card" 
+                className="absolute inset-0 size-full object-cover pointer-events-none" 
+              />
               <img 
                 src="/assets/aged-edges-scuffs.svg" 
                 alt="" 
-                className="absolute inset-[-8px] w-[280px] h-[391px] pointer-events-none" 
+                className="absolute inset-0 size-full pointer-events-none" 
               />
             </div>
           </div>
         </div>
 
-        {/* Card 8 (Bottom Right Lavender Card) - node 5:251 with image 222 */}
+        {/* Card 8 (Bottom Right Lavender Card) */}
         <div 
-          {...dragProps('card-8')}
+          onPointerDown={(e) => handlePointerDown('card-8', e)}
           className="absolute flex items-center justify-center select-none"
-          style={getCardStyle('card-8', 327.68, 413.7, 10)}
+          style={getCardStyle('card-8', 10)}
         >
-          <div className="rotate-[10.37deg] w-[265.02px] h-[372.07px] rounded-[16.47px] overflow-hidden bg-[rgba(185,166,244,0.66)] border-[7px] border-[#cfc1f1] shadow-[6px_13px_4px_0px_rgba(0,0,0,0.25)] relative pointer-events-none">
+          <div className="rotate-[10.37deg] w-[80%] h-[90%] rounded-[16.47px] overflow-hidden bg-[rgba(185,166,244,0.66)] border-[6px] lg:border-[7px] border-[#cfc1f1] shadow-[6px_13px_4px_0px_rgba(0,0,0,0.25)] relative pointer-events-none">
             <img 
               src="/assets/outside-photo-4.png" 
               alt="Creative work" 
-              className="absolute inset-[-20px_-20px] w-[115%] h-[115%] object-cover pointer-events-none" 
+              className="absolute inset-0 size-full object-cover pointer-events-none" 
             />
           </div>
         </div>
 
       </div>
 
-      {/* Tablet & Mobile Layout: Responsive Grid Collage */}
-      <div className="lg:hidden px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-[700px] mx-auto relative z-10">
+      {/* Mobile Responsive Grid Flow (< 768px): All 8 Cards Present */}
+      <div className="md:hidden px-4 grid grid-cols-1 sm:grid-cols-2 gap-7 max-w-[640px] mx-auto relative z-10">
         
         {/* Center Hero Card: About me */}
-        <div className="sm:col-span-2 relative w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[10px] border-black shadow-2xl">
+        <div className="sm:col-span-2 relative w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[10px] border-black shadow-2xl flex flex-col justify-between">
           <img src="/assets/paper-highlights.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
           <img src="/assets/paper-fibers.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
           <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none z-20" />
-          <span className="absolute left-[6px] top-[-2px] font-['Bodoni_Moda'] font-bold text-[45px] text-[#20201d] leading-none z-10">A</span>
-          <span className="absolute right-[6px] bottom-[-2px] font-['Bodoni_Moda'] font-bold text-[45px] text-[#20201d] leading-none rotate-180 z-10">A</span>
-          <p className="font-['Afacad_Flux'] font-normal text-[#080808] text-[26.2px] text-center mt-6">About me</p>
-          <div className="w-[137px] h-[160px] mx-auto my-2 flex items-center justify-center">
-            <img src="/assets/ace-emblem.svg" alt="Ace Emblem" className="size-full object-contain" />
+          
+          <div className="relative z-10 pt-2 px-3">
+            <span className="font-['Bodoni_Moda'] font-bold text-[45px] text-[#20201d] leading-none pointer-events-none">A</span>
+            <p className="font-['Afacad_Flux'] font-normal text-[#080808] text-[26.2px] text-center -mt-6 pointer-events-none">About me</p>
           </div>
-          <div className="absolute bottom-[20px] left-0 right-0 flex items-center justify-center gap-2 z-30">
-            <img src="/assets/instagram.svg" alt="Instagram" className="size-[17px]" />
-            <a 
-              href="https://www.instagram.com/nehadc_art/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-['Roboto_Condensed'] font-bold text-[12px] text-[#20201d] underline hover:opacity-80 transition-opacity"
-            >
-              Click here to view all creations
-            </a>
+
+          <div className="relative z-10 w-[137px] h-[160px] mx-auto flex items-center justify-center pointer-events-none">
+            <img src="/assets/ace-emblem.svg" alt="Ace Emblem" className="size-full object-contain pointer-events-none" />
+          </div>
+
+          <div className="relative z-30 pb-4 px-3 flex items-center justify-between">
+            <div className="flex items-center gap-2 mx-auto">
+              <img src="/assets/instagram.svg" alt="Instagram" className="size-[17px] pointer-events-none" />
+              <a 
+                href="https://www.instagram.com/nehadc_art/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-['Roboto_Condensed'] font-bold text-[12px] text-[#20201d] underline hover:opacity-80 transition-opacity"
+              >
+                Click here to view all creations
+              </a>
+            </div>
+            <span className="font-['Bodoni_Moda'] font-bold text-[45px] text-[#20201d] leading-none rotate-180 pointer-events-none absolute right-3 bottom-2">A</span>
           </div>
         </div>
 
-        {/* Card 1 */}
+        {/* Card 1 (Photo) */}
         <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
-          <img src="/assets/outside-card-1.png" alt="Painting and art" className="w-full h-full object-contain" />
-        </div>
-
-        {/* Card 2 */}
-        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
-          <img src="/assets/outside-photo-237.png" alt="Photography" className="w-full h-full object-cover rounded-[16.5px]" />
-        </div>
-
-        {/* Card 3 */}
-        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
           <img src="/assets/outside-photo-236.png" alt="Photography" className="w-full h-full object-cover rounded-[16.5px]" />
         </div>
 
-        {/* Card 4 */}
+        {/* Card 2 (Art) */}
         <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
           <img src="/assets/outside-card-7.png" alt="Art and design creation" className="w-full h-full object-contain" />
         </div>
 
-        {/* Card 5 (Tilted card on desktop) */}
+        {/* Card 3 (Painting) */}
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden shadow-lg">
+          <img src="/assets/outside-card-1.png" alt="Painting and art" className="w-full h-full object-contain" />
+        </div>
+
+        {/* Card 4 (Aged Playing Card Collage) */}
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[10px] border-black shadow-lg relative">
+          <img src="/assets/paper-texture-card.png" alt="" className="absolute inset-0 size-full object-cover pointer-events-none" />
+          <img src="/assets/paper-highlights.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
+          <img src="/assets/paper-fibers.svg" alt="" className="absolute inset-0 size-full pointer-events-none opacity-80" />
+          <div className="absolute left-0 top-[186px] w-[265px] h-[245px] pointer-events-none">
+            <img src="/assets/outside-photo-239.png" alt="Artwork collage" className="w-full h-full object-cover pointer-events-none" />
+          </div>
+          <div className="absolute left-0 top-[-2px] w-[248px] h-[186px] pointer-events-none">
+            <img src="/assets/outside-photo-238.png" alt="Artwork" className="w-full h-full object-cover pointer-events-none" />
+          </div>
+          <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none" />
+        </div>
+
+        {/* Card 6 (Photo) */}
+        <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] shadow-lg">
+          <img src="/assets/outside-photo-237.png" alt="Photography" className="w-full h-full object-cover rounded-[16.5px]" />
+        </div>
+
+        {/* Card 7 (Tilted Artwork Card) */}
         <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[#f6e0c5] border-[8px] border-[#7d0f0f] shadow-lg relative">
           <img src="/assets/outside-photo-240.png" alt="Artwork card" className="w-full h-full object-cover" />
           <img src="/assets/aged-edges-scuffs.svg" alt="" className="absolute inset-0 size-full pointer-events-none" />
         </div>
 
-        {/* Card 6 (Lavender card on desktop) */}
+        {/* Card 8 (Lavender Card) */}
         <div className="w-[265px] max-w-[calc(100vw-2rem)] h-[372px] mx-auto rounded-[16.5px] overflow-hidden bg-[rgba(185,166,244,0.66)] border-[6px] border-[#cfc1f1] shadow-lg relative">
           <img src="/assets/outside-photo-4.png" alt="Creative work" className="w-full h-full object-cover" />
         </div>

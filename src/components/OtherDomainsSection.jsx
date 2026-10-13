@@ -59,7 +59,9 @@ export default function OtherDomainsSection() {
   const [withTransition, setWithTransition] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef(null);
-  const [containerWidth, setContainerWidth] = useState(1312);
+  const [containerWidth, setContainerWidth] = useState(
+    typeof window !== 'undefined' ? Math.min(window.innerWidth - 32, 1312) : 1312
+  );
 
   // Measure container width responsively
   useEffect(() => {
@@ -158,7 +160,7 @@ export default function OtherDomainsSection() {
   };
 
   return (
-    <section className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[130px] px-4 sm:px-6 md:px-16 lg:px-[64px] overflow-hidden">
+    <section className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[110px] xl:py-[130px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[64px] overflow-hidden">
       {/* Scoped CSS animation for smooth, flicker-free label cross-fade */}
       <style>{`
         @keyframes domainLabelFade {
@@ -167,17 +169,17 @@ export default function OtherDomainsSection() {
         }
       `}</style>
 
-      <div className="max-w-[1312px] mx-auto flex flex-col items-center">
+      <div className="max-w-[1312px] xl:max-w-[1360px] 2xl:max-w-[1440px] mx-auto flex flex-col items-center">
         
         {/* Section Heading (Afacad Flux 50px) */}
-        <h2 className="w-full text-left font-['Afacad_Flux'] font-normal text-white text-[28px] sm:text-[38px] md:text-[50px] leading-tight mb-8 sm:mb-12 md:mb-[78px]">
+        <h2 className="w-full text-left font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[36px] md:text-[50px] leading-tight mb-7 sm:mb-12 md:mb-[78px]">
           Check out other domains I’ve explored
         </h2>
 
         {/* Carousel Viewport Container with Touch Swiping */}
         <div 
           ref={containerRef}
-          className="relative w-full max-w-[1312px] h-[280px] sm:h-[320px] md:h-[360px] select-none flex items-center justify-center overflow-hidden"
+          className="relative w-full max-w-[1312px] xl:max-w-[1360px] 2xl:max-w-[1440px] h-[260px] sm:h-[320px] md:h-[360px] lg:h-[390px] xl:h-[410px] select-none flex items-center justify-center overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
@@ -205,7 +207,13 @@ export default function OtherDomainsSection() {
                   href={card.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => handleCardClick(index)}
+                  onClick={(e) => {
+                    if (isSwipingRef.current) {
+                      e.preventDefault();
+                      return;
+                    }
+                    handleCardClick(index);
+                  }}
                   className={`shrink-0 overflow-hidden bg-[#252525] select-none relative block custom-orange-cursor no-underline ${
                     isCenter ? '' : 'hover:brightness-110'
                   }`}

@@ -22,9 +22,9 @@ export default function FooterSection() {
       id="connect" 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-full bg-[#1e1e1e] pt-[70px] sm:pt-[90px] md:pt-[130px] pb-[75px] sm:pb-[95px] md:pb-[115px] px-4 sm:px-6 md:px-16 lg:px-[118px] relative overflow-hidden ${isHovered ? 'custom-black-cursor' : ''}`}
+      className={`w-full bg-[#1e1e1e] pt-[70px] sm:pt-[90px] md:pt-[110px] xl:pt-[130px] pb-[75px] sm:pb-[95px] md:pb-[115px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[118px] relative overflow-hidden ${isHovered ? 'custom-black-cursor' : ''}`}
     >
-      <div className="max-w-[1244px] mx-auto flex flex-col lg:flex-row items-start justify-between gap-10 sm:gap-12 lg:gap-8 relative">
+      <div className="max-w-[1244px] xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto flex flex-col lg:flex-row items-start justify-between gap-10 sm:gap-12 lg:gap-8 relative">
         
         {/* Left Heading & Neha Cursor Badge */}
         <div className="flex flex-col items-start relative">
@@ -51,10 +51,10 @@ export default function FooterSection() {
             <button
               type="button"
               onClick={handleCopyEmail}
-              className="w-full sm:w-[306px] h-[52px] sm:h-[54.5px] bg-white border border-white rounded-[8.3px] px-4 sm:px-5 flex items-center justify-between shadow-sm hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              className="w-full sm:w-[280px] xl:w-[306px] h-[52px] sm:h-[54.5px] bg-white border border-white rounded-[8.3px] px-4 sm:px-5 flex items-center justify-between shadow-sm hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
               title="Click to copy email"
             >
-              <span className="font-['Afacad_Flux'] font-normal text-[#080808] text-[15px] xs:text-[17px] sm:text-[20.9px] truncate sm:whitespace-nowrap">
+              <span className="font-['Afacad_Flux'] font-normal text-[#080808] text-[16px] sm:text-[20.9px] truncate sm:whitespace-nowrap">
                 {copiedEmail ? 'Copied to clipboard!' : 'nehadc9d@gmail.com'}
               </span>
               <img src="/assets/copy-icon-email.svg" alt="Copy" className="size-[16px] shrink-0 ml-2" />
@@ -64,7 +64,7 @@ export default function FooterSection() {
             <button
               type="button"
               onClick={handleCopyPhone}
-              className="w-full sm:w-[306px] h-[52px] sm:h-[54.5px] bg-transparent border border-white rounded-[8.3px] px-4 sm:px-5 flex items-center justify-between shadow-sm hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              className="w-full sm:w-[280px] xl:w-[306px] h-[52px] sm:h-[54.5px] bg-transparent border border-white rounded-[8.3px] px-4 sm:px-5 flex items-center justify-between shadow-sm hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
               title="Click to copy phone"
             >
               <span className="font-['Afacad_Flux'] font-normal text-white text-[16px] sm:text-[20.9px] whitespace-nowrap">
@@ -81,7 +81,7 @@ export default function FooterSection() {
               href="https://www.behance.net/nehachaware"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-[306px] h-[52px] sm:h-[54.5px] bg-transparent border border-white rounded-[8.3px] px-4 sm:px-5 flex items-center justify-between shadow-sm hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              className="w-full sm:w-[280px] xl:w-[306px] h-[52px] sm:h-[54.5px] bg-transparent border border-white rounded-[8.3px] px-4 sm:px-5 flex items-center justify-between shadow-sm hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
             >
               <span className="font-['Afacad_Flux'] font-normal text-white text-[17px] sm:text-[20.9px]">
                 Behance
@@ -90,7 +90,7 @@ export default function FooterSection() {
             </a>
 
             {/* LinkedIn Button Container */}
-            <div className="relative w-full sm:w-[306px]">
+            <div className="relative w-full sm:w-[280px] xl:w-[306px]">
               <a
                 href="https://www.linkedin.com/in/neha-chaware-749b26217/?isSelfProfile=true"
                 target="_blank"

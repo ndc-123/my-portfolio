@@ -24,7 +24,7 @@ export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
 
   return (
     <header className={`w-full bg-[#1e1e1e] ${isFixed ? 'sticky top-0 z-50' : 'relative z-30'} ${className}`}>
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-16 lg:px-[101px] h-[72px] sm:h-[80px] md:h-[113px] flex items-center justify-between">
+      <div className="max-w-[1440px] xl:max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[101px] h-[72px] sm:h-[80px] md:h-[88px] lg:h-[96px] xl:h-[113px] flex items-center justify-between">
         {/* Monogram Logo */}
         <a 
           href="/" 
@@ -35,7 +35,7 @@ export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-[40px] lg:gap-[64.47px]">
+        <nav className="hidden md:flex items-center gap-7 lg:gap-10 xl:gap-[64.47px]">
           <a
             href="/#work"
             onClick={(e) => handleLinkClick(e, '/#work')}

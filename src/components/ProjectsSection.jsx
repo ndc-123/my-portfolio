@@ -53,8 +53,8 @@ const projects = [
 
 export default function ProjectsSection({ onNavigate }) {
   return (
-    <section id="work" className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[120px] px-4 sm:px-6 md:px-16 lg:px-[111px] overflow-hidden">
-      <div className="max-w-[1300px] mx-auto">
+    <section id="work" className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[120px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[111px] overflow-hidden">
+      <div className="max-w-[1300px] xl:max-w-[1360px] 2xl:max-w-[1440px] mx-auto">
         
         {/* Section Title */}
         <h2 className="font-['Afacad_Flux'] font-normal text-white text-[28px] sm:text-[32px] md:text-[37.24px] tracking-wide mb-8 sm:mb-12 md:mb-[70px]">
@@ -80,7 +80,7 @@ export default function ProjectsSection({ onNavigate }) {
                       onNavigate(proj.slug);
                     }
                   }}
-                  className="w-full lg:w-[749.5px] flex flex-col gap-5 sm:gap-8 md:gap-[50px] shrink-0 custom-black-cursor block no-underline text-inherit group transition-transform duration-300 ease-out origin-center hover:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-xl"
+                  className="w-full lg:w-[700px] xl:w-[749.5px] flex flex-col gap-5 sm:gap-8 md:gap-[50px] shrink-0 custom-black-cursor block no-underline text-inherit group transition-transform duration-300 ease-out origin-center hover:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-xl"
                 >
                   
                   {/* Card Media & Tags */}
@@ -91,14 +91,14 @@ export default function ProjectsSection({ onNavigate }) {
                       {proj.tags.map((tag, idx) => (
                         <div
                           key={idx}
-                          className="h-[32px] sm:h-[38.2px] px-3 sm:px-5 flex items-center justify-center rounded-tl-[8.23px] rounded-tr-[8.23px] shadow-sm relative shrink-0"
+                          className="h-[30px] sm:h-[38.2px] px-2.5 sm:px-5 flex items-center justify-center rounded-tl-[8.23px] rounded-tr-[8.23px] shadow-sm relative shrink-0"
                           style={{
                             backgroundColor: tag.bg,
                             color: tag.color,
                             zIndex: 10 + idx,
                           }}
                         >
-                          <span className="font-['Afacad_Flux'] font-normal text-[12.5px] sm:text-[14px] md:text-[15.8px] whitespace-nowrap">
+                          <span className="font-['Afacad_Flux'] font-normal text-[12px] sm:text-[14px] md:text-[15.8px] whitespace-nowrap">
                             {tag.text}
                           </span>
                         </div>
@@ -106,7 +106,7 @@ export default function ProjectsSection({ onNavigate }) {
                     </div>
 
                     {/* Project Image Box */}
-                    <div className="w-full h-[200px] xs:h-[240px] sm:h-[340px] md:h-[425px] rounded-bl-[10px] rounded-br-[10px] rounded-tr-[10px] overflow-hidden shadow-[2.2px_2.93px_2.93px_0px_rgba(0,0,0,0.25)] bg-[#2a2a2a] relative group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-shadow duration-300">
+                    <div className="w-full aspect-[16/10] sm:aspect-[16/9.2] lg:h-[425px] rounded-bl-[10px] rounded-br-[10px] rounded-tr-[10px] overflow-hidden shadow-[2.2px_2.93px_2.93px_0px_rgba(0,0,0,0.25)] bg-[#2a2a2a] relative group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-shadow duration-300">
                       <img
                         src={proj.image}
                         alt={proj.title}
@@ -116,7 +116,7 @@ export default function ProjectsSection({ onNavigate }) {
                   </div>
 
                   {/* Project Title */}
-                  <h3 className="font-['Afacad_Flux'] font-normal text-white text-[19px] sm:text-[24px] md:text-[30.6px] leading-snug w-full">
+                  <h3 className="font-['Afacad_Flux'] font-normal text-white text-[18px] sm:text-[23px] md:text-[30.6px] leading-snug w-full">
                     {proj.title}
                   </h3>
                 </a>

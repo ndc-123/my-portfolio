@@ -124,10 +124,10 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
       </div>
 
       {/* 2. Main Case Study Layout (Sticky Sidebar + Image Track) */}
-      <div className="w-full pt-3 lg:pt-5 pb-8 pl-2 sm:pl-5 lg:pl-6 xl:pl-8 pr-2 sm:pr-3 lg:pr-3 xl:pr-5 flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8 relative items-start">
+      <div className="w-full max-w-[1536px] 2xl:max-w-[1600px] mx-auto pt-3 lg:pt-5 pb-8 px-2 sm:px-4 md:px-6 lg:pl-6 lg:pr-4 xl:pl-8 xl:pr-6 flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8 relative items-start">
         
         {/* Left Sticky Sidebar (Desktop) */}
-        <aside className="hidden lg:flex flex-col w-[200px] xl:w-[220px] shrink-0 sticky top-5 self-start py-1 z-30">
+        <aside className="hidden lg:flex flex-col w-[190px] xl:w-[220px] shrink-0 sticky top-5 self-start py-1 z-30">
           
           {/* Back Link */}
           <button
@@ -195,7 +195,7 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
                     src={img.src}
                     alt={img.alt}
                     loading={imgIdx === 0 && section.id === 'overview' ? 'eager' : 'lazy'}
-                    className="w-full h-auto block select-none pointer-events-none rounded-none"
+                    className="w-full h-auto max-w-full block select-none pointer-events-none rounded-none"
                     style={{
                       width: '100%',
                       height: 'auto',

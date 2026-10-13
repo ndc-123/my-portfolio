@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 380px;
   --font-afacad: 'Afacad Flux', sans-serif;
   --font-literata: 'Literata', serif;
   --font-bodoni: 'Bodoni Moda', serif;

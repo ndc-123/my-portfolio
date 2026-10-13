@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function TestimonialsSection() {
   return (
-    <section className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[120px] px-4 sm:px-6 md:px-16 lg:px-[117px] overflow-hidden">
-      <div className="max-w-[1244px] mx-auto flex flex-col gap-8 sm:gap-10 md:gap-[60px]">
+    <section className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[120px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[117px] overflow-hidden">
+      <div className="max-w-[1244px] xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto flex flex-col gap-8 sm:gap-10 md:gap-[60px]">
         
         {/* Section Heading */}
         <h2 className="font-['Afacad_Flux'] font-normal text-white text-[28px] sm:text-[36px] md:text-[48px] tracking-wide">
@@ -11,7 +11,7 @@ export default function TestimonialsSection() {
         </h2>
 
         {/* Testimonial Card 1: James Andy Hopkins */}
-        <div className="relative bg-[#c4b2fb] border-[1px] border-white rounded-[9.2px] p-5 sm:p-8 md:p-12 lg:p-16 text-[#080808] shadow-xl overflow-hidden">
+        <div className="relative bg-[#c4b2fb] border-[1px] border-white rounded-[9.2px] p-5 pb-8 sm:p-8 sm:pb-10 md:p-12 lg:p-16 text-[#080808] shadow-xl overflow-hidden">
           
           {/* Top Left Playing Card Rank */}
           <span 
@@ -61,7 +61,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Testimonial Card 2: Anup Palikondawar */}
-        <div className="relative bg-[#f1dabe] border-[1px] border-[#b4c8be] rounded-[9.2px] p-5 sm:p-8 md:p-12 lg:p-16 text-[#080808] shadow-xl overflow-hidden">
+        <div className="relative bg-[#f1dabe] border-[1px] border-[#b4c8be] rounded-[9.2px] p-5 pb-8 sm:p-8 sm:pb-10 md:p-12 lg:p-16 text-[#080808] shadow-xl overflow-hidden">
           
           {/* Top Left Playing Card Rank */}
           <span 

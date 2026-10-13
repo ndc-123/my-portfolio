@@ -409,8 +409,8 @@ function StackedCardColumn4() {
 export default function CardsSection() {
   return (
     <section 
-      id="about"
-      className="relative w-full bg-[#1e1e1e] py-[70px] sm:py-[80px] lg:py-[114px] px-4 sm:px-6 md:px-16 lg:px-[114px] overflow-hidden"
+      id="cards"
+      className="relative w-full bg-[#1e1e1e] py-[70px] sm:py-[80px] lg:py-[100px] xl:py-[114px] px-4 sm:px-6 md:px-12 lg:px-14 xl:px-16 2xl:px-[114px] overflow-hidden"
     >
       {/* Background Dust Texture */}
       <div 
@@ -419,15 +419,15 @@ export default function CardsSection() {
         aria-hidden="true"
       />
 
-      <div className="relative max-w-[1240px] mx-auto z-10 flex flex-col gap-8 sm:gap-12 md:gap-[69px] items-start">
+      <div className="relative max-w-[1240px] xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto z-10 flex flex-col gap-8 sm:gap-12 md:gap-[55px] xl:gap-[69px] items-start">
         
         {/* Section Heading (Afacad Flux 33.7px) */}
-        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] xs:text-[28px] sm:text-[30px] md:text-[33.7px] tracking-wide">
+        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[30px] md:text-[33.7px] tracking-wide">
           Cards I bring to the table
         </h2>
 
-        {/* Desktop Layout: Frame 2147226207 (gap-[49px] items-end) */}
-        <div className="hidden xl:flex gap-[49px] items-end w-full">
+        {/* Desktop Layout: Frame 2147226207 (fluid gap for 1280px-1440px+) */}
+        <div className="hidden xl:flex gap-4 xl:gap-[24px] 2xl:gap-[49px] justify-between xl:justify-center items-end w-full">
           
           {/* Card 1: Club (Unravelling Complexity) -> Flips on Hover to reveal K back */}
           <FlippableCard
@@ -507,7 +507,7 @@ export default function CardsSection() {
         </div>
 
         {/* Responsive Layout for Tablets / Mobile: Flippable on hover / tap */}
-        <div className="xl:hidden flex flex-wrap justify-center sm:justify-start md:flex-nowrap gap-6 overflow-x-auto pb-6 pt-2 px-1 scrollbar-thin snap-x snap-mandatory w-full max-w-full">
+        <div className="xl:hidden flex flex-nowrap gap-5 sm:gap-6 overflow-x-auto pb-6 pt-2 px-4 sm:px-6 md:px-16 -mx-4 sm:-mx-6 md:-mx-16 no-scrollbar snap-x snap-mandatory w-auto max-w-none">
           <FlippableCard
             className="snap-center"
             front={
