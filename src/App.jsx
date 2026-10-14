@@ -8,6 +8,7 @@ import TestimonialsSection from './components/TestimonialsSection';
 import OutsideWorkSection from './components/OutsideWorkSection';
 import FooterSection from './components/FooterSection';
 import CaseStudyPage from './components/CaseStudyPage';
+import CustomCursor from './components/CustomCursor';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -82,46 +83,55 @@ export default function App() {
     }
   };
 
-  // Render project case-study pages
-  if (currentPath === '/projects/ecosys') {
-    return <CaseStudyPage projectId="ecosys" onNavigate={navigate} />;
-  }
-  if (currentPath === '/projects/reloom') {
-    return <CaseStudyPage projectId="reloom" onNavigate={navigate} />;
-  }
-  if (currentPath === '/projects/strava') {
-    return <CaseStudyPage projectId="strava" onNavigate={navigate} />;
-  }
-  if (currentPath === '/projects/legacy-system') {
-    return <CaseStudyPage projectId="legacy-system" onNavigate={navigate} />;
-  }
+  // Render project case-study pages or homepage with root-level CustomCursor
+  const renderContent = () => {
+    if (currentPath === '/projects/ecosys') {
+      return <CaseStudyPage projectId="ecosys" onNavigate={navigate} />;
+    }
+    if (currentPath === '/projects/reloom') {
+      return <CaseStudyPage projectId="reloom" onNavigate={navigate} />;
+    }
+    if (currentPath === '/projects/strava') {
+      return <CaseStudyPage projectId="strava" onNavigate={navigate} />;
+    }
+    if (currentPath === '/projects/legacy-system') {
+      return <CaseStudyPage projectId="legacy-system" onNavigate={navigate} />;
+    }
 
-  // Default: Homepage
+    // Default: Homepage
+    return (
+      <div className="min-h-screen w-full bg-[#1e1e1e] text-white flex flex-col font-['Afacad_Flux'] overflow-x-clip">
+        {/* 1. Header Navigation */}
+        <Navbar onNavigate={navigate} />
+
+        {/* 2. Hero Section: Bio, Tagline & Pinned Photo Stack */}
+        <HeroSection />
+
+        {/* 3. Cards I Bring to the Table: Playing Cards & Strengths */}
+        <CardsSection />
+
+        {/* 4. Selected Deck: Work & Submitted Projects */}
+        <ProjectsSection onNavigate={navigate} />
+
+        {/* 5. Other Domains Explored: Fanned Card Carousel & Agentic AI */}
+        <OtherDomainsSection />
+
+        {/* 6. Testimonials: Recommendation Cards */}
+        <TestimonialsSection />
+
+        {/* 7. Outside of Work: Art & Creation Photo Collage */}
+        <OutsideWorkSection />
+
+        {/* 8. Let's Connect: Contact Buttons & Multiplayer Cursors */}
+        <FooterSection />
+      </div>
+    );
+  };
+
   return (
-    <div className="min-h-screen w-full bg-[#1e1e1e] text-white flex flex-col font-['Afacad_Flux'] overflow-x-clip">
-      {/* 1. Header Navigation */}
-      <Navbar onNavigate={navigate} />
-
-      {/* 2. Hero Section: Bio, Tagline & Pinned Photo Stack */}
-      <HeroSection />
-
-      {/* 3. Cards I Bring to the Table: Playing Cards & Strengths */}
-      <CardsSection />
-
-      {/* 4. Selected Deck: Work & Submitted Projects */}
-      <ProjectsSection onNavigate={navigate} />
-
-      {/* 5. Other Domains Explored: Fanned Card Carousel & Agentic AI */}
-      <OtherDomainsSection />
-
-      {/* 6. Testimonials: Recommendation Cards */}
-      <TestimonialsSection />
-
-      {/* 7. Outside of Work: Art & Creation Photo Collage */}
-      <OutsideWorkSection />
-
-      {/* 8. Let's Connect: Contact Buttons & Multiplayer Cursors */}
-      <FooterSection />
-    </div>
+    <>
+      <CustomCursor />
+      {renderContent()}
+    </>
   );
 }

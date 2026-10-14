@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 export default function FooterSection() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText('nehadc9d@gmail.com');
@@ -20,16 +19,14 @@ export default function FooterSection() {
   return (
     <footer 
       id="connect" 
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`w-full bg-[#1e1e1e] pt-[70px] sm:pt-[90px] md:pt-[110px] xl:pt-[130px] pb-[75px] sm:pb-[95px] md:pb-[115px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[118px] relative overflow-hidden ${isHovered ? 'custom-black-cursor' : ''}`}
+      className="w-full bg-[#1e1e1e] pt-[70px] sm:pt-[90px] md:pt-[110px] xl:pt-[130px] pb-[85px] sm:pb-[105px] md:pb-[125px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[118px] relative overflow-hidden"
     >
       <div className="max-w-[1244px] xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto flex flex-col lg:flex-row items-start justify-between gap-10 sm:gap-12 lg:gap-8 relative">
         
         {/* Left Heading & Neha Cursor Badge */}
         <div className="flex flex-col items-start relative">
-          <h2 className="font-['Afacad_Flux'] font-normal text-white text-[32px] sm:text-[42px] md:text-[54px] leading-tight mb-6 sm:mb-8">
-            Lets connect :)
+          <h2 className="font-['Afacad_Flux'] font-normal text-white text-[32px] sm:text-[42px] md:text-[54px] leading-tight mb-6 sm:mb-8 max-w-[540px]">
+            You’ve come too far to not connect :)
           </h2>
 
           {/* Multiplayer Cursor Badge 1: Neha (image 234) */}
@@ -104,15 +101,13 @@ export default function FooterSection() {
               </a>
 
               {/* Multiplayer Cursor Badge 2: You (image 235) */}
-              {!isHovered && (
-                <div className="connect-you-badge hidden sm:block select-none absolute left-0 bottom-[-76px] pointer-events-none transition-opacity duration-150">
-                  <img 
-                    src="/assets/cursor-you-badge.png" 
-                    alt="You cursor" 
-                    className="w-[84px] h-[62px] object-contain drop-shadow"
-                  />
-                </div>
-              )}
+              <div className="connect-you-badge hidden sm:block select-none absolute left-0 bottom-[-72px] pointer-events-none">
+                <img 
+                  src="/assets/cursor-you-badge.png" 
+                  alt="You cursor" 
+                  className="w-[84px] h-[62px] object-contain drop-shadow"
+                />
+              </div>
             </div>
           </div>
 

@@ -44,7 +44,8 @@ export default function TestimonialsSection() {
             href="https://drive.google.com/file/d/1Z7hzMRanHUUx0qT_3lQYUDlgqFl6qkOV/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#f1eefa] py-1 px-3 sm:py-[4px] sm:px-[6px] rounded-[7.8px] shadow-sm hover:bg-white transition-colors custom-orange-cursor no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+            className="inline-flex items-center gap-3 bg-[#f1eefa] py-1 px-3 sm:py-[4px] sm:px-[6px] rounded-[7.8px] shadow-sm hover:bg-white transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+            data-cursor="view"
           >
             <div className="size-[44px] sm:size-[53.7px] rounded overflow-hidden shrink-0 shadow-sm">
               <img 

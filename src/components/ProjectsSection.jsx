@@ -80,14 +80,15 @@ export default function ProjectsSection({ onNavigate }) {
                       onNavigate(proj.slug);
                     }
                   }}
-                  className="w-full lg:w-[700px] xl:w-[749.5px] flex flex-col gap-5 sm:gap-8 md:gap-[50px] shrink-0 custom-black-cursor block no-underline text-inherit group transition-transform duration-300 ease-out origin-center hover:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-xl"
+                  className="project-card w-full lg:w-[700px] xl:w-[749.5px] flex flex-col gap-5 sm:gap-8 md:gap-[50px] shrink-0 custom-black-cursor no-underline text-inherit group origin-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-xl"
+                  data-cursor="view"
                 >
                   
                   {/* Card Media & Tags */}
-                  <div className="w-full flex flex-col items-start">
+                  <div className="w-full flex flex-col items-start gap-0">
                     
                     {/* Tags Row with compact layered overlap */}
-                    <div className="flex items-center -space-x-[6px] sm:-space-x-[8.5px] z-10 max-w-full overflow-x-auto no-scrollbar py-0.5">
+                    <div className="flex items-end -space-x-[6px] sm:-space-x-[8.5px] z-10 max-w-full overflow-x-auto no-scrollbar pt-1 pb-0 mb-0">
                       {proj.tags.map((tag, idx) => (
                         <div
                           key={idx}
@@ -106,11 +107,11 @@ export default function ProjectsSection({ onNavigate }) {
                     </div>
 
                     {/* Project Image Box */}
-                    <div className="w-full aspect-[16/10] sm:aspect-[16/9.2] lg:h-[425px] rounded-bl-[10px] rounded-br-[10px] rounded-tr-[10px] overflow-hidden shadow-[2.2px_2.93px_2.93px_0px_rgba(0,0,0,0.25)] bg-[#2a2a2a] relative group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-shadow duration-300">
+                    <div className="project-card-image-box w-full aspect-[16/10] sm:aspect-[16/9.2] lg:h-[425px] rounded-bl-[10px] rounded-br-[10px] rounded-tr-[10px] overflow-hidden shadow-[2.2px_2.93px_2.93px_0px_rgba(0,0,0,0.25)] bg-[#2a2a2a] relative">
                       <img
                         src={proj.image}
                         alt={proj.title}
-                        className="w-full h-full object-cover object-center pointer-events-none"
+                        className="project-card-image w-full h-full object-cover object-center pointer-events-none"
                       />
                     </div>
                   </div>

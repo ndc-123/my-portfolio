@@ -46,20 +46,36 @@ body {
   background: #555555;
 }
 
-/* Custom #1E1E1E Pointer Cursor on Hover (pointer devices only) */
-@media (hover: hover) and (pointer: fine) {
-  .custom-orange-cursor,
-  .custom-orange-cursor *,
-  .custom-black-cursor,
-  .custom-black-cursor *,
-  #connect:hover,
-  #connect:hover * {
-    cursor: url('/assets/cursor-view.png?v=5') 0 0, pointer !important;
-  }
+/* Hide system cursor ONLY when hovering project cards */
+.project-card,
+.project-card *,
+[data-cursor="view"],
+[data-cursor="view"] * {
+  cursor: none !important;
+}
 
-  #connect:hover .connect-you-badge {
-    display: none !important;
-  }
+/* Project Card Hover Scaling (Reliable cross-browser, cross-device scaling) */
+.project-card {
+  display: flex !important;
+  flex-direction: column !important;
+  transform: scale(1);
+  transform-origin: center center !important;
+  transition: transform 280ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 280ms ease-out !important;
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: scale(0.97) !important;
+}
+
+/* Ensure project preview image scales with parent card only and never zooms independently */
+.project-card .project-card-image,
+.project-card:hover .project-card-image {
+  transform: none !important;
+}
+
+.project-card:hover .project-card-image-box {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Hide scrollbar utility for clean horizontal swipe tracks */

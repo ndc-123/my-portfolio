@@ -58,9 +58,9 @@ function PlayingCard({
       </div>
 
       {/* Vertical Rotated Title on Right Side */}
-      <div className="absolute right-[14px] top-[40px] bottom-[40px] w-[60px] flex items-center justify-center z-10 pointer-events-none">
+      <div className="absolute right-[14px] top-[24px] bottom-[24px] w-[60px] flex items-center justify-center z-10 pointer-events-none">
         <span
-          className="font-['Literata'] font-normal text-[24px] sm:text-[26px] whitespace-nowrap -rotate-90 origin-center block tracking-wide"
+          className="font-['Literata'] font-normal text-[22px] sm:text-[24px] whitespace-nowrap -rotate-90 origin-center block tracking-wide select-none"
           style={{ color: titleColor }}
         >
           {title}

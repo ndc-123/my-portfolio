@@ -217,6 +217,7 @@ export default function OtherDomainsSection() {
                   className={`shrink-0 overflow-hidden bg-[#252525] select-none relative block custom-orange-cursor no-underline ${
                     isCenter ? '' : 'hover:brightness-110'
                   }`}
+                  data-cursor="view"
                   style={{
                     width: `${cardWidth}px`,
                     height: `${cardHeight}px`,
