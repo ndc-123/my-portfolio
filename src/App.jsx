@@ -9,6 +9,7 @@ import OutsideWorkSection from './components/OutsideWorkSection';
 import FooterSection from './components/FooterSection';
 import CaseStudyPage from './components/CaseStudyPage';
 import CustomCursor from './components/CustomCursor';
+import JumpToTopButton from './components/JumpToTopButton';
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -132,6 +133,7 @@ export default function App() {
     <>
       <CustomCursor />
       {renderContent()}
+      <JumpToTopButton />
     </>
   );
 }

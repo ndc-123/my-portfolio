@@ -291,14 +291,14 @@ export default function OutsideWorkSection() {
           Outside of work you’ll always find me creating
         </h2>
 
-        {/* Centered "About me" Button */}
+        {/* Centered "What I've been creating" Button */}
         <a
           href="https://www.instagram.com/nehadc_art/"
           target="_blank"
           rel="noopener noreferrer"
           className="font-['Literata'] font-normal text-white text-[14px] sm:text-[16px] md:text-[17px] bg-[#222222]/90 hover:bg-[#2c2c2c] active:scale-95 border border-white/80 rounded-[8px] px-6 sm:px-7 py-1.5 sm:py-2 transition-all duration-200 shadow-md hover:shadow-lg pointer-events-auto no-underline inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
         >
-          About me
+          What I've been creating
         </a>
       </div>
     </section>

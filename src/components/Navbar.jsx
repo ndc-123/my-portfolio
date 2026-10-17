@@ -51,8 +51,9 @@ export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
             about
           </a>
           <a
-            href="/#resume"
-            onClick={(e) => handleLinkClick(e, '/#resume')}
+            href="https://drive.google.com/file/d/155VLI2z_D_3ok-rW9CxqazHdNSj6nop5/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-['Literata'] font-normal text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
             resume
@@ -107,8 +108,10 @@ export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
             about
           </a>
           <a
-            href="/#resume"
-            onClick={(e) => handleLinkClick(e, '/#resume')}
+            href="https://drive.google.com/file/d/155VLI2z_D_3ok-rW9CxqazHdNSj6nop5/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
             className="font-['Literata'] text-white text-[18px] py-2 px-1 hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
             resume

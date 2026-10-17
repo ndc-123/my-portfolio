@@ -8,7 +8,6 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
   const [activeSection, setActiveSection] = useState(
     project?.sections?.[0]?.id || 'overview'
   );
-  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Measure top offset dynamically for smooth scrolling (no top nav on desktop, mobile has sticky bar)
   const getNavOffset = () => {
@@ -30,21 +29,11 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
     setActiveSection(sectionId);
   };
 
-  // Smooth scroll to top of page
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
-  // ScrollSpy to highlight the active section dynamically and toggle Back to Top button
+  // ScrollSpy to highlight the active section dynamically
   useEffect(() => {
     if (!project) return;
 
     const handleScroll = () => {
-      // Toggle Back to Top button visibility
-      setShowBackToTop(window.scrollY > 400);
 
       const offset = getNavOffset() + 20;
       const scrollPos = window.scrollY + offset;
@@ -233,30 +222,6 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
 
       {/* 4. Let's Connect Footer */}
       <FooterSection />
-
-      {/* 5. Back to Top Floating Button */}
-      <button
-        type="button"
-        onClick={handleScrollToTop}
-        aria-label="Back to top"
-        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-50 flex items-center gap-2 px-3.5 py-2 md:px-4 md:py-2.5 rounded-full bg-[#1e1e1e]/90 hover:bg-[#2a2a2a] text-white border border-white/20 hover:border-white/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300 font-['Afacad_Flux'] text-[13.5px] md:text-[14.5px] group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/40 ${
-          showBackToTop
-            ? 'opacity-100 translate-y-0 pointer-events-auto'
-            : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
-      >
-        <svg
-          className="w-4 h-4 text-white transform group-hover:-translate-y-0.5 transition-transform"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-        <span className="hidden sm:inline">Back to Top</span>
-        <span className="sm:hidden">Top</span>
-      </button>
     </div>
   );
 }
