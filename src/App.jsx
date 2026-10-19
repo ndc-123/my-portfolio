@@ -8,6 +8,7 @@ import TestimonialsSection from './components/TestimonialsSection';
 import OutsideWorkSection from './components/OutsideWorkSection';
 import FooterSection from './components/FooterSection';
 import CaseStudyPage from './components/CaseStudyPage';
+import AboutPage from './components/AboutPage';
 import CustomCursor from './components/CustomCursor';
 import JumpToTopButton from './components/JumpToTopButton';
 
@@ -49,6 +50,9 @@ export default function App() {
       case '/projects/legacy-system':
         document.title = 'Legacy Operational System Redesign — Neha Chaware';
         break;
+      case '/about':
+        document.title = 'About Me — Neha Chaware';
+        break;
       default:
         document.title = 'Neha Chaware — Portfolio';
         break;
@@ -63,17 +67,22 @@ export default function App() {
       window.history.pushState({}, '', to);
       setCurrentPath(targetPath);
       if (hash) {
-        setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        const scrollToHash = (attempts = 0) => {
           const el = document.getElementById(hash);
           if (el) {
             el.scrollIntoView({ behavior: 'smooth' });
+          } else if (attempts < 10) {
+            setTimeout(() => scrollToHash(attempts + 1), 50);
           }
-        }, 120);
+        };
+        setTimeout(() => scrollToHash(), 80);
       } else {
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
     } else {
       if (hash) {
+        window.history.pushState({}, '', to);
         const el = document.getElementById(hash);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
@@ -84,7 +93,7 @@ export default function App() {
     }
   };
 
-  // Render project case-study pages or homepage with root-level CustomCursor
+  // Render project case-study pages, about page, or homepage with root-level CustomCursor
   const renderContent = () => {
     if (currentPath === '/projects/ecosys') {
       return <CaseStudyPage projectId="ecosys" onNavigate={navigate} />;
@@ -97,6 +106,9 @@ export default function App() {
     }
     if (currentPath === '/projects/legacy-system') {
       return <CaseStudyPage projectId="legacy-system" onNavigate={navigate} />;
+    }
+    if (currentPath === '/about') {
+      return <AboutPage onNavigate={navigate} />;
     }
 
     // Default: Homepage

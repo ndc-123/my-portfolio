@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
+export default function Navbar({ onNavigate, isFixed = true, className = '', activePage = '' }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLinkClick = (e, target) => {
@@ -46,7 +46,7 @@ export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
           <a
             href="/#about"
             onClick={(e) => handleLinkClick(e, '/#about')}
-            className="font-['Literata'] font-normal text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className={`font-['Literata'] ${activePage === 'about' ? 'font-bold' : 'font-normal'} text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
           >
             about
           </a>
@@ -103,7 +103,7 @@ export default function Navbar({ onNavigate, isFixed = true, className = '' }) {
           <a
             href="/#about"
             onClick={(e) => handleLinkClick(e, '/#about')}
-            className="font-['Literata'] text-white text-[18px] py-2 px-1 hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className={`font-['Literata'] ${activePage === 'about' ? 'font-bold' : 'font-normal'} text-white text-[18px] py-2 px-1 hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
           >
             about
           </a>

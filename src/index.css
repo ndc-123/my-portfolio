@@ -46,11 +46,11 @@ body {
   background: #555555;
 }
 
-/* Hide system cursor ONLY when hovering project cards */
+/* Hide system cursor when hovering elements with custom cursor */
 .project-card,
 .project-card *,
-[data-cursor="view"],
-[data-cursor="view"] * {
+[data-cursor],
+[data-cursor] * {
   cursor: none !important;
 }
 

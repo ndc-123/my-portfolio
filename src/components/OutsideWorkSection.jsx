@@ -86,6 +86,49 @@ const MOBILE_LAYOUT = {
   'photo-7-lower-right': { relX: 0.58, relY: 0.73, relW: 0.38, relH: 0.23 },
 };
 
+// Amazon links for the two published anthologies
+const AMAZON_LINKS = {
+  surrealMoments:
+    'https://www.amazon.in/dp/939537425X?&linkCode=sl1&tag=storymirror-21&linkId=562994aecca64e568aed581bc659d0f2&language=en_IN&ref_=as_li_ss_tl',
+  sandCastles:
+    'https://www.amazon.in/dp/B0BHTHTQJ6?&linkCode=sl1&tag=storymirror-21&linkId=da11e8f2f739e85ef60ab876d9b4a5e9&language=en_IN&ref_=as_li_ss_tl',
+};
+
+// Default center heading content when not hovering or tapping any photo
+const DEFAULT_HEADING = 'Outside of work you’ll always find me creating';
+
+// Dynamic text and action mapping for each photo card
+const PHOTO_CONTENT_MAP = {
+  'photo-1-upper-left': {
+    text: 'Performing on stage since 2012',
+    amazonLink: null,
+  },
+  'photo-2-top-center-left': {
+    text: 'Playing instruments when I’m not working',
+    amazonLink: null,
+  },
+  'photo-3-top-center-right': {
+    text: 'Capturing moments before they escape in time',
+    amazonLink: null,
+  },
+  'photo-4-upper-right': {
+    text: 'Co-author of an anthology',
+    amazonLink: AMAZON_LINKS.sandCastles,
+  },
+  'photo-5-lower-left': {
+    text: 'Co-author of an anthology',
+    amazonLink: AMAZON_LINKS.surrealMoments,
+  },
+  'photo-6-lower-center': {
+    text: 'Always bringing dessert to the party',
+    amazonLink: null,
+  },
+  'photo-7-lower-right': {
+    text: 'Volunteering for people',
+    amazonLink: null,
+  },
+};
+
 export default function OutsideWorkSection() {
   const boardRef = useRef(null);
   const [boardDims, setBoardDims] = useState({ width: 1440, height: 800 });
@@ -93,6 +136,14 @@ export default function OutsideWorkSection() {
   const [zIndices, setZIndices] = useState({});
   const [draggingId, setDraggingId] = useState(null);
 
+  // Dynamic heading & interaction states
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [displayedHeading, setDisplayedHeading] = useState(DEFAULT_HEADING);
+  const [fadeState, setFadeState] = useState('in');
+
+  const leaveTimerRef = useRef(null);
+  const wasDraggedRef = useRef(false);
   const topZIndexRef = useRef(20);
   const activeDragRef = useRef(null);
 
@@ -171,6 +222,7 @@ export default function OutsideWorkSection() {
     const cardInfo = getCardDefaultPos(cardId);
     const currentPos = positions[cardId] || { x: cardInfo.x, y: cardInfo.y };
 
+    wasDraggedRef.current = false;
     activeDragRef.current = {
       cardId,
       pointerId: e.pointerId,
@@ -191,6 +243,7 @@ export default function OutsideWorkSection() {
 
       if (!drag.hasMoved && Math.hypot(dx, dy) > 4) {
         drag.hasMoved = true;
+        wasDraggedRef.current = true;
       }
 
       setPositions((prev) => ({
@@ -214,6 +267,100 @@ export default function OutsideWorkSection() {
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
   };
+
+  // Derive active heading from hovered card or tapped/selected card
+  const activeCardId = hoveredCardId || selectedCardId || null;
+  const targetHeading = activeCardId
+    ? PHOTO_CONTENT_MAP[activeCardId]?.text || DEFAULT_HEADING
+    : DEFAULT_HEADING;
+
+  // Smooth fade transition between heading texts
+  useEffect(() => {
+    if (targetHeading === displayedHeading) {
+      return;
+    }
+
+    const fadeOutTimer = setTimeout(() => {
+      setFadeState('out');
+    }, 0);
+
+    const swapTimer = setTimeout(() => {
+      setDisplayedHeading(targetHeading);
+      setFadeState('in');
+    }, 90);
+
+    return () => {
+      clearTimeout(fadeOutTimer);
+      clearTimeout(swapTimer);
+    };
+  }, [targetHeading, displayedHeading]);
+
+  // Leave timer management for smooth hover experience
+  const clearLeaveTimer = () => {
+    if (leaveTimerRef.current) {
+      clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = null;
+    }
+  };
+
+  const handleCardMouseEnter = (cardId) => {
+    if (draggingId && draggingId !== cardId) return;
+    clearLeaveTimer();
+    setHoveredCardId(cardId);
+  };
+
+  const handleCardMouseLeave = () => {
+    clearLeaveTimer();
+    leaveTimerRef.current = setTimeout(() => {
+      setHoveredCardId(null);
+    }, 280);
+  };
+
+  const handleCenterMouseEnter = () => {
+    clearLeaveTimer();
+  };
+
+  const handleCenterMouseLeave = () => {
+    clearLeaveTimer();
+    leaveTimerRef.current = setTimeout(() => {
+      setHoveredCardId(null);
+    }, 280);
+  };
+
+  const handleCardClick = (cardId, e) => {
+    e.stopPropagation();
+    if (wasDraggedRef.current) {
+      wasDraggedRef.current = false;
+      return;
+    }
+    clearLeaveTimer();
+    setSelectedCardId((prev) => (prev === cardId ? null : cardId));
+
+    // If an anthology photo is clicked or tapped, open its Amazon URL in a new browser tab
+    const photoInfo = PHOTO_CONTENT_MAP[cardId];
+    if (photoInfo?.amazonLink) {
+      window.open(photoInfo.amazonLink, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleBackgroundClick = (e) => {
+    if (e.target.closest('a') || e.target.closest('button')) {
+      return;
+    }
+    clearLeaveTimer();
+    setHoveredCardId(null);
+    setSelectedCardId(null);
+  };
+
+  const handleSectionMouseLeave = () => {
+    clearLeaveTimer();
+    setHoveredCardId(null);
+    setSelectedCardId(null);
+  };
+
+  useEffect(() => {
+    return () => clearLeaveTimer();
+  }, []);
 
   const getCardStyle = (photo) => {
     const cardInfo = getCardDefaultPos(photo.id);
@@ -249,6 +396,8 @@ export default function OutsideWorkSection() {
       }}
       className="w-full relative overflow-hidden select-none z-20 m-0 p-0"
       aria-label="Outside of work photo collage"
+      onClick={handleBackgroundClick}
+      onMouseLeave={handleSectionMouseLeave}
     >
       {/* Dark Charcoal Repeating Checkerboard Pattern (#1d1d1d & #222222) */}
       <div 
@@ -267,31 +416,60 @@ export default function OutsideWorkSection() {
       />
 
       {/* Floating Photo Collage: 7 intact photo prints fully visible within cards */}
-      {COLLAGE_PHOTOS.map((photo) => (
-        <div
-          key={photo.id}
-          onPointerDown={(e) => handlePointerDown(photo.id, e)}
-          style={getCardStyle(photo)}
-          className="absolute select-none will-change-transform"
-        >
-          {/* Complete photo card fully visible with object-contain (no cropping/clipping) */}
-          <img 
-            src={photo.src}
-            alt={photo.alt}
-            className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
-            draggable={false}
-          />
+      {COLLAGE_PHOTOS.map((photo) => {
+        const photoInfo = PHOTO_CONTENT_MAP[photo.id];
+        const isAnthology = Boolean(photoInfo?.amazonLink);
+
+        return (
+          <div
+            key={photo.id}
+            data-card="true"
+            data-cursor={isAnthology ? 'Buy on Amazon' : undefined}
+            onPointerDown={(e) => handlePointerDown(photo.id, e)}
+            onMouseEnter={() => handleCardMouseEnter(photo.id)}
+            onMouseLeave={handleCardMouseLeave}
+            onClick={(e) => handleCardClick(photo.id, e)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleCardClick(photo.id, e);
+              }
+            }}
+            tabIndex={0}
+            role={isAnthology ? 'link' : 'button'}
+            aria-label={isAnthology ? `${photo.alt} - Buy on Amazon` : photo.alt}
+            style={getCardStyle(photo)}
+            className="absolute select-none will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            {/* Complete photo card fully visible with object-contain (no cropping/clipping) */}
+            <img 
+              src={photo.src}
+              alt={photo.alt}
+              className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+              draggable={false}
+            />
+          </div>
+        );
+      })}
+
+      {/* Centered Content: Dynamic Heading & Static Button placed cleanly in central space */}
+      <div 
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-4"
+        onMouseEnter={handleCenterMouseEnter}
+        onMouseLeave={handleCenterMouseLeave}
+      >
+        {/* Centered Heading with smooth quick fade and stable min-height to eliminate layout shifts */}
+        <div className="min-h-[58px] sm:min-h-[66px] md:min-h-[76px] lg:min-h-[86px] flex items-center justify-center w-full px-2 mb-4 sm:mb-5 md:mb-6 max-w-[850px] pointer-events-auto">
+          <h2 
+            className={`font-['Afacad_Flux'] font-normal text-white text-[22px] sm:text-[26px] md:text-[32px] lg:text-[36px] xl:text-[40px] tracking-normal text-center leading-tight drop-shadow-md select-text transition-opacity duration-150 ease-in-out ${
+              fadeState === 'in' ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {displayedHeading}
+          </h2>
         </div>
-      ))}
 
-      {/* Centered Content: Heading & About Me Button placed cleanly in central space */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-4">
-        {/* Centered Heading */}
-        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[22px] sm:text-[26px] md:text-[32px] lg:text-[36px] xl:text-[40px] tracking-normal text-center leading-tight mb-4 sm:mb-5 md:mb-6 drop-shadow-md select-text pointer-events-auto max-w-[850px]">
-          Outside of work you’ll always find me creating
-        </h2>
-
-        {/* Centered "What I've been creating" Button */}
+        {/* Existing Centered Button: Unchanged appearance, position, styling, and functionality */}
         <a
           href="https://www.instagram.com/nehadc_art/"
           target="_blank"

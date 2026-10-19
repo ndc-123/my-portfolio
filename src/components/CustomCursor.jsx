@@ -4,6 +4,8 @@ export default function CustomCursor() {
   const cursorRef = useRef(null);
   const [isHoveringProject, setIsHoveringProject] = useState(false);
   const isHoveringRef = useRef(false);
+  const [cursorText, setCursorText] = useState('View');
+  const cursorTextRef = useRef('View');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -28,15 +30,22 @@ export default function CustomCursor() {
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
 
-      // Check whether target is inside any project card, Other Projects card, or Read Full button
+      // Check whether target is inside any project card, Other Projects card, or element with data-cursor
       const target = e.target;
-      const isProjectCard = Boolean(
-        target &&
-        target instanceof Element &&
-        target.closest('.project-card, [data-cursor="view"]')
-      );
+      const cursorEl =
+        target && target instanceof Element
+          ? target.closest('.project-card, [data-cursor]')
+          : null;
 
-      if (isProjectCard) {
+      if (cursorEl) {
+        const rawLabel = cursorEl.getAttribute('data-cursor');
+        const nextText = rawLabel && rawLabel !== 'view' ? rawLabel : 'View';
+
+        if (cursorTextRef.current !== nextText) {
+          cursorTextRef.current = nextText;
+          setCursorText(nextText);
+        }
+
         if (!isHoveringRef.current) {
           isHoveringRef.current = true;
           setIsHoveringProject(true);
@@ -54,6 +63,8 @@ export default function CustomCursor() {
         isHoveringRef.current = false;
         setIsHoveringProject(false);
       }
+      cursorTextRef.current = 'View';
+      setCursorText('View');
     };
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
@@ -100,7 +111,7 @@ export default function CustomCursor() {
           }}
         >
           <span className="font-['Afacad_Flux',sans-serif] font-bold text-white text-[15px] sm:text-[16px] leading-none tracking-normal select-none">
-            View
+            {cursorText}
           </span>
         </div>
       </div>
