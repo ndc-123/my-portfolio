@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import CardsSection from './components/CardsSection';
@@ -146,6 +147,7 @@ export default function App() {
       <CustomCursor />
       {renderContent()}
       <JumpToTopButton />
+      <Analytics />
     </>
   );
 }
