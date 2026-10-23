@@ -113,9 +113,9 @@ export default function OtherDomainsSection() {
     ? Math.max(220, Math.round(containerWidth * 0.72))
     : isMobile
     ? Math.min(290, Math.round(containerWidth * 0.75))
-    : 381;
+    : 305;
   const cardHeight = Math.round(cardWidth * (306 / 381));
-  const gap = isMobile ? (isSmallMobile ? 14 : 20) : 32;
+  const gap = isMobile ? (isSmallMobile ? 14 : 20) : 26;
   const step = cardWidth + gap;
   const translateX = containerWidth / 2 - (currentIndex * step + cardWidth / 2);
 
@@ -160,7 +160,7 @@ export default function OtherDomainsSection() {
   };
 
   return (
-    <section className="w-full bg-[#1e1e1e] py-[70px] sm:py-[90px] md:py-[110px] xl:py-[130px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[64px] overflow-hidden">
+    <section className="w-full bg-[#1e1e1e] py-[60px] sm:py-[75px] md:py-[95px] xl:py-[105px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[52px] overflow-hidden">
       {/* Scoped CSS animation for smooth, flicker-free label cross-fade */}
       <style>{`
         @keyframes domainLabelFade {
@@ -169,17 +169,17 @@ export default function OtherDomainsSection() {
         }
       `}</style>
 
-      <div className="max-w-[1312px] xl:max-w-[1360px] 2xl:max-w-[1440px] mx-auto flex flex-col items-center">
+      <div className="max-w-[1200px] xl:max-w-[1280px] 2xl:max-w-[1380px] mx-auto flex flex-col items-center">
         
-        {/* Section Heading (Afacad Flux 50px) */}
-        <h2 className="w-full text-left font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[36px] md:text-[50px] leading-tight mb-7 sm:mb-12 md:mb-[78px]">
+        {/* Section Heading */}
+        <h2 className="w-full text-left font-['Afacad_Flux'] font-normal text-white text-[24px] sm:text-[32px] md:text-[40px] leading-tight mb-6 sm:mb-8 md:mb-[58px]">
           Check out other domains I’ve explored
         </h2>
 
         {/* Carousel Viewport Container with Touch Swiping */}
         <div 
           ref={containerRef}
-          className="relative w-full max-w-[1312px] xl:max-w-[1360px] 2xl:max-w-[1440px] h-[260px] sm:h-[320px] md:h-[360px] lg:h-[390px] xl:h-[410px] select-none flex items-center justify-center overflow-hidden"
+          className="relative w-full max-w-[1200px] xl:max-w-[1280px] 2xl:max-w-[1380px] h-[240px] sm:h-[280px] md:h-[310px] lg:h-[330px] xl:h-[345px] select-none flex items-center justify-center overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStart}
@@ -251,10 +251,10 @@ export default function OtherDomainsSection() {
         </div>
 
         {/* Domain Label: Synchronized with the currently active featured card */}
-        <div className="w-full flex justify-center mt-6 h-[48px] items-center">
+        <div className="w-full flex justify-center mt-5 h-[42px] items-center">
           <p
             key={activeCard.id}
-            className="font-['Afacad_Flux'] font-normal text-white text-[24px] sm:text-[28px] md:text-[32px] tracking-normal select-none"
+            className="font-['Afacad_Flux'] font-normal text-white text-[18px] sm:text-[22px] md:text-[25px] tracking-normal select-none"
             style={{ animation: 'domainLabelFade 280ms ease-out' }}
           >
             {activeCard.title}

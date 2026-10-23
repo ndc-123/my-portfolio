@@ -14,7 +14,7 @@ function PlayingCard({
 }) {
   return (
     <div
-      className={`relative w-[265px] h-[372px] rounded-[16.5px] overflow-hidden shrink-0 select-none shadow-md ${className}`}
+      className={`relative w-[218px] h-[305px] rounded-[13px] overflow-hidden shrink-0 select-none shadow-md ${className}`}
       style={{ backgroundColor: bg }}
     >
       {/* Paper texture highlights & fibers */}
@@ -33,12 +33,12 @@ function PlayingCard({
 
       {/* Top Left Rank or Star */}
       {starIcon ? (
-        <div className="absolute left-[12px] top-[15.5px] size-[54px] z-10">
+        <div className="absolute left-[10px] top-[12px] size-[44px] z-10">
           <img src={starIcon} alt="Star" className="size-full" />
         </div>
       ) : (
         <span
-          className="absolute left-[14px] top-[9.7px] font-['Bodoni_Moda'] font-normal text-[40px] leading-none z-10"
+          className="absolute left-[11px] top-[8px] font-['Bodoni_Moda'] font-normal text-[33px] leading-none z-10"
           style={{ color: rankColor }}
         >
           {rank}
@@ -47,20 +47,20 @@ function PlayingCard({
 
       {/* Optional Badge (e.g. Coming soon) */}
       {badgeText && (
-        <p className="absolute left-[14px] top-[87.6px] font-['Afacad_Flux'] text-[15px] font-normal leading-tight text-[#080808] z-10">
+        <p className="absolute left-[11px] top-[70px] font-['Afacad_Flux'] text-[13px] font-normal leading-tight text-[#080808] z-10">
           {badgeText}
         </p>
       )}
 
       {/* Large Suit Silhouette at Bottom Left */}
-      <div className="absolute left-[-48px] top-[151px] w-[189px] h-[220px] pointer-events-none opacity-95">
+      <div className="absolute left-[-38px] top-[122px] w-[152px] h-[178px] pointer-events-none opacity-95">
         <img src={suitIcon} alt="" className="size-full object-contain" />
       </div>
 
       {/* Vertical Rotated Title on Right Side */}
-      <div className="absolute right-[14px] top-[24px] bottom-[24px] w-[60px] flex items-center justify-center z-10 pointer-events-none">
+      <div className="absolute right-[11px] top-[20px] bottom-[20px] w-[48px] flex items-center justify-center z-10 pointer-events-none">
         <span
-          className="font-['Literata'] font-normal text-[22px] sm:text-[24px] whitespace-nowrap -rotate-90 origin-center block tracking-wide select-none"
+          className="font-['Literata'] font-normal text-[18px] sm:text-[19.5px] whitespace-nowrap -rotate-90 origin-center block tracking-wide select-none"
           style={{ color: titleColor }}
         >
           {title}
@@ -77,14 +77,14 @@ function CardBack({
   rank = 'K',
   rankColor = '#080808',
   smallSuitIcon = null,
-  suitPos = { left: '79px', top: '17px', width: '27px', height: '32px' },
+  suitPos = { left: '62px', top: '14px', width: '22px', height: '26px' },
   starIcon = null,
   description = '',
   className = '',
 }) {
   return (
     <div
-      className={`relative w-[265px] h-[372px] rounded-[16.5px] overflow-hidden shrink-0 select-none shadow-md ${className}`}
+      className={`relative w-[218px] h-[305px] rounded-[13px] overflow-hidden shrink-0 select-none shadow-md ${className}`}
       style={{ backgroundColor: bg }}
     >
       {/* Paper texture highlights & fibers */}
@@ -103,13 +103,13 @@ function CardBack({
 
       {/* Top Left Rank or Star */}
       {starIcon ? (
-        <div className="absolute left-[14px] top-[14px] size-[46px] z-10 pointer-events-none">
+        <div className="absolute left-[11px] top-[11px] size-[38px] z-10 pointer-events-none">
           <img src={starIcon} alt="Star" className="size-full" />
         </div>
       ) : (
         <>
           <span
-            className="absolute left-[14px] top-[9.7px] font-['Bodoni_Moda'] font-normal text-[40px] leading-none z-10 pointer-events-none"
+            className="absolute left-[11px] top-[8px] font-['Bodoni_Moda'] font-normal text-[33px] leading-none z-10 pointer-events-none"
             style={{ color: rankColor }}
           >
             {rank}
@@ -131,15 +131,15 @@ function CardBack({
       )}
 
       {/* Center Description Text */}
-      <div className="absolute inset-x-[32px] top-[100px] bottom-[100px] flex items-center justify-center text-center z-10 pointer-events-none px-2">
-        <p className="font-['Afacad_Flux'] text-[16px] sm:text-[17px] font-normal leading-[1.38] text-[#080808] max-w-[195px]">
+      <div className="absolute inset-x-[24px] top-[80px] bottom-[80px] flex items-center justify-center text-center z-10 pointer-events-none px-2">
+        <p className="font-['Afacad_Flux'] text-[13.5px] sm:text-[14.5px] font-normal leading-[1.38] text-[#080808] max-w-[165px]">
           {description}
         </p>
       </div>
 
       {/* Bottom Right Inverted Rank or Star */}
       {starIcon ? (
-        <div className="absolute right-[14px] bottom-[14px] size-[46px] z-10 rotate-180 pointer-events-none">
+        <div className="absolute right-[11px] bottom-[11px] size-[38px] z-10 rotate-180 pointer-events-none">
           <img src={starIcon} alt="Star" className="size-full" />
         </div>
       ) : (
@@ -158,7 +158,7 @@ function CardBack({
             </div>
           )}
           <span
-            className="absolute right-[14px] bottom-[9.7px] font-['Bodoni_Moda'] font-normal text-[40px] leading-none z-10 rotate-180 pointer-events-none"
+            className="absolute right-[11px] bottom-[8px] font-['Bodoni_Moda'] font-normal text-[33px] leading-none z-10 rotate-180 pointer-events-none"
             style={{ color: rankColor }}
           >
             {rank}
@@ -179,7 +179,7 @@ function FlippableCard({
 
   return (
     <div
-      className={`group/card relative w-[265px] h-[372px] shrink-0 select-none cursor-pointer [perspective:1000px] ${className}`}
+      className={`group/card relative w-[218px] h-[305px] shrink-0 select-none cursor-pointer [perspective:1000px] ${className}`}
       onMouseEnter={() => setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}
       onClick={() => setIsFlipped((prev) => !prev)}
@@ -194,7 +194,7 @@ function FlippableCard({
       aria-label="Interactive flippable card"
     >
       <div
-        className="relative w-full h-full rounded-[16.5px]"
+        className="relative w-full h-full rounded-[13px]"
         style={{
           transformStyle: 'preserve-3d',
           WebkitTransformStyle: 'preserve-3d',
@@ -204,7 +204,7 @@ function FlippableCard({
       >
         {/* Front Face */}
         <div
-          className="absolute inset-0 w-full h-full rounded-[16.5px] overflow-hidden"
+          className="absolute inset-0 w-full h-full rounded-[13px] overflow-hidden"
           style={{
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
@@ -216,7 +216,7 @@ function FlippableCard({
 
         {/* Back Face */}
         <div
-          className="absolute inset-0 w-full h-full rounded-[16.5px] overflow-hidden"
+          className="absolute inset-0 w-full h-full rounded-[13px] overflow-hidden"
           style={{
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
@@ -232,14 +232,14 @@ function FlippableCard({
 
 // Specialized Component for Column 4:
 // 1. Hover on Heart card: flips Heart card in place (no position swap).
-// 2. Hover directly on hidden card (top 88px peeking area): swaps positions first, then flips hidden card.
+// 2. Hover directly on hidden card (top 70px peeking area): swaps positions first, then flips hidden card.
 function StackedCardColumn4() {
   const [isHeartFlipped, setIsHeartFlipped] = useState(false);
   const [isSwapped, setIsSwapped] = useState(false);
 
   // Hidden card (Joker / Agent) slot styling
   const jokerSlotStyle = {
-    transform: isSwapped ? 'translateY(88px)' : 'translateY(0px)',
+    transform: isSwapped ? 'translateY(70px)' : 'translateY(0px)',
     zIndex: isSwapped ? 30 : 10,
     transition: isSwapped
       ? 'transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, z-index 0ms step-start 200ms'
@@ -255,7 +255,7 @@ function StackedCardColumn4() {
 
   // Heart card slot styling (swaps to back only when isSwapped is true)
   const heartSlotStyle = {
-    transform: isSwapped ? 'translateY(-88px)' : 'translateY(0px)',
+    transform: isSwapped ? 'translateY(-70px)' : 'translateY(0px)',
     zIndex: isSwapped ? 10 : 20,
     transition: isSwapped
       ? 'transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, z-index 0ms step-start 200ms'
@@ -272,7 +272,7 @@ function StackedCardColumn4() {
 
   return (
     <div
-      className="relative w-[265px] h-[460px] shrink-0 select-none [perspective:1000px]"
+      className="relative w-[218px] h-[375px] shrink-0 select-none [perspective:1000px]"
       onMouseLeave={() => {
         setIsSwapped(false);
         setIsHeartFlipped(false);
@@ -282,16 +282,16 @@ function StackedCardColumn4() {
     >
       {/* Top Hidden Card (Joker) Slot: starts at top, translates down to bottom slot when swapped */}
       <div
-        className="absolute top-0 left-0 w-[265px] h-[372px]"
+        className="absolute top-0 left-0 w-[218px] h-[305px]"
         style={jokerSlotStyle}
       >
         <div
-          className="relative w-full h-full rounded-[16.5px]"
+          className="relative w-full h-full rounded-[13px]"
           style={jokerFlipperStyle}
         >
           {/* Joker Front */}
           <div
-            className="absolute inset-0 w-full h-full rounded-[16.5px] overflow-hidden"
+            className="absolute inset-0 w-full h-full rounded-[13px] overflow-hidden"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
@@ -309,7 +309,7 @@ function StackedCardColumn4() {
 
           {/* Joker Back */}
           <div
-            className="absolute inset-0 w-full h-full rounded-[16.5px] overflow-hidden"
+            className="absolute inset-0 w-full h-full rounded-[13px] overflow-hidden"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
@@ -328,7 +328,7 @@ function StackedCardColumn4() {
       {/* Dedicated hit area for the exposed top portion of the hidden card (active when not swapped) */}
       {!isSwapped && (
         <div
-          className="absolute top-0 left-0 w-full h-[88px] z-30 cursor-pointer"
+          className="absolute top-0 left-0 w-full h-[70px] z-30 cursor-pointer"
           onMouseEnter={() => {
             setIsHeartFlipped(false);
             setIsSwapped(true);
@@ -341,9 +341,9 @@ function StackedCardColumn4() {
         />
       )}
 
-      {/* Bottom Heart Card Slot: starts at y=88px flush with other cards */}
+      {/* Bottom Heart Card Slot: starts at y=70px flush with other cards */}
       <div
-        className="absolute top-[88px] left-0 w-[265px] h-[372px] cursor-pointer"
+        className="absolute top-[70px] left-0 w-[218px] h-[305px] cursor-pointer"
         style={heartSlotStyle}
         onMouseEnter={() => {
           if (!isSwapped) {
@@ -360,12 +360,12 @@ function StackedCardColumn4() {
         }}
       >
         <div
-          className="relative w-full h-full rounded-[16.5px]"
+          className="relative w-full h-full rounded-[13px]"
           style={heartFlipperStyle}
         >
           {/* Heart Front */}
           <div
-            className="absolute inset-0 w-full h-full rounded-[16.5px] overflow-hidden"
+            className="absolute inset-0 w-full h-full rounded-[13px] overflow-hidden"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
@@ -384,7 +384,7 @@ function StackedCardColumn4() {
 
           {/* Heart Back (flips in place to reveal back with K rank) */}
           <div
-            className="absolute inset-0 w-full h-full rounded-[16.5px] overflow-hidden"
+            className="absolute inset-0 w-full h-full rounded-[13px] overflow-hidden"
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
@@ -396,7 +396,7 @@ function StackedCardColumn4() {
               rank="K"
               rankColor="#7d0f0f"
               smallSuitIcon="/assets/heart-suit.svg"
-              suitPos={{ left: '51px', top: '19px', width: '25px', height: '29px' }}
+              suitPos={{ left: '40px', top: '15px', width: '20px', height: '23px' }}
               description="Designing with empathy, focusing on real human behaviors, needs, and motivations."
             />
           </div>
@@ -410,7 +410,7 @@ export default function CardsSection() {
   return (
     <section 
       id="cards"
-      className="relative w-full bg-[#1e1e1e] py-[70px] sm:py-[80px] lg:py-[100px] xl:py-[114px] px-4 sm:px-6 md:px-12 lg:px-14 xl:px-16 2xl:px-[114px] overflow-hidden"
+      className="relative w-full bg-[#1e1e1e] py-[60px] sm:py-[72px] lg:py-[84px] xl:py-[92px] px-4 sm:px-6 md:px-12 lg:px-14 xl:px-16 2xl:px-[95px] overflow-hidden"
     >
       {/* Background Dust Texture */}
       <div 
@@ -419,15 +419,15 @@ export default function CardsSection() {
         aria-hidden="true"
       />
 
-      <div className="relative max-w-[1240px] xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto z-10 flex flex-col gap-8 sm:gap-12 md:gap-[55px] xl:gap-[69px] items-start">
+      <div className="relative max-w-[1200px] xl:max-w-[1280px] 2xl:max-w-[1380px] mx-auto z-10 flex flex-col gap-6 sm:gap-10 md:gap-[42px] xl:gap-[52px] items-start">
         
-        {/* Section Heading (Afacad Flux 33.7px) */}
-        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[26px] sm:text-[30px] md:text-[33.7px] tracking-wide">
+        {/* Section Heading */}
+        <h2 className="font-['Afacad_Flux'] font-normal text-white text-[24px] sm:text-[27px] md:text-[29px] tracking-wide">
           Cards I bring to the table
         </h2>
 
         {/* Desktop Layout: Frame 2147226207 (fluid gap for 1280px-1440px+) */}
-        <div className="hidden xl:flex gap-4 xl:gap-[24px] 2xl:gap-[49px] justify-between xl:justify-center items-end w-full">
+        <div className="hidden xl:flex gap-4 xl:gap-[20px] 2xl:gap-[36px] justify-between xl:justify-center items-end w-full">
           
           {/* Card 1: Club (Unravelling Complexity) -> Flips on Hover to reveal K back */}
           <FlippableCard
@@ -447,7 +447,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#080808"
                 smallSuitIcon="/assets/club-suit.svg"
-                suitPos={{ left: '79px', top: '17px', width: '27px', height: '32px' }}
+                suitPos={{ left: '62px', top: '14px', width: '22px', height: '26px' }}
                 description="Breaking down complex procceses, mapping dependencies, and streamlining interactions."
               />
             }
@@ -471,7 +471,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#7d0f0f"
                 smallSuitIcon="/assets/diamond-suit.svg"
-                suitPos={{ left: '48px', top: '21px', width: '24px', height: '27px' }}
+                suitPos={{ left: '38px', top: '17px', width: '19px', height: '22px' }}
                 description="Crafting intuitive, accessible interfaces that delight users and drive real engagement."
               />
             }
@@ -495,7 +495,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#080808"
                 smallSuitIcon="/assets/spade-suit.svg"
-                suitPos={{ left: '48px', top: '18px', width: '24px', height: '28px' }}
+                suitPos={{ left: '38px', top: '14px', width: '19px', height: '22px' }}
                 description="Approaching product challenges through research, systems thinking, and iterative design."
               />
             }
@@ -526,7 +526,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#080808"
                 smallSuitIcon="/assets/club-suit.svg"
-                suitPos={{ left: '79px', top: '17px', width: '27px', height: '32px' }}
+                suitPos={{ left: '62px', top: '14px', width: '22px', height: '26px' }}
                 description="Breaking down complex procceses, mapping dependencies, and streamlining interactions."
               />
             }
@@ -550,7 +550,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#7d0f0f"
                 smallSuitIcon="/assets/diamond-suit.svg"
-                suitPos={{ left: '48px', top: '21px', width: '24px', height: '27px' }}
+                suitPos={{ left: '38px', top: '17px', width: '19px', height: '22px' }}
                 description="Crafting intuitive, accessible interfaces that delight users and drive real engagement."
               />
             }
@@ -574,7 +574,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#080808"
                 smallSuitIcon="/assets/spade-suit.svg"
-                suitPos={{ left: '48px', top: '18px', width: '24px', height: '28px' }}
+                suitPos={{ left: '38px', top: '14px', width: '19px', height: '22px' }}
                 description="Approaching product challenges through research, systems thinking, and iterative design."
               />
             }
@@ -598,7 +598,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#7d0f0f"
                 smallSuitIcon="/assets/heart-suit.svg"
-                suitPos={{ left: '51px', top: '19px', width: '25px', height: '29px' }}
+                suitPos={{ left: '40px', top: '15px', width: '20px', height: '23px' }}
                 description="Designing with empathy, focusing on real human behaviors, needs, and motivations."
               />
             }

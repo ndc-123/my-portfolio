@@ -187,37 +187,39 @@ export const CASE_STUDIES = {
         id: 'overview',
         label: 'Overview & Context',
         images: [
-          { src: '/assets/internship/1.png', alt: 'Overview & About the System' },
+          { src: '/assets/leaseware/01.png', alt: 'Overview & About the System' },
         ],
       },
       {
         id: 'challenge',
         label: 'Challenge & Goals',
         images: [
-          { src: '/assets/internship/2.png', alt: 'My Role, Challenge & Goal' },
+          { src: '/assets/leaseware/02.png', alt: 'My Role, Challenge & Goal' },
+          { src: '/assets/leaseware/03.png', alt: 'My Role, Challenge & Goal' },
         ],
       },
       {
         id: 'audit',
         label: 'Audit & Strategy',
         images: [
-          { src: '/assets/internship/3.png', alt: 'Understanding the System & Insights' },
-          { src: '/assets/internship/4.png', alt: 'How Might We & Approach to Redesign' },
+          { src: '/assets/leaseware/04.png', alt: 'Understanding the System & Insights' },
+          { src: '/assets/leaseware/05.png', alt: 'How Might We & Approach to Redesign' },
+          { src: '/assets/leaseware/06.png', alt: 'How Might We & Approach to Redesign' },
         ],
       },
       {
         id: 'redesign',
         label: 'Redesigned System',
         images: [
-          { src: '/assets/internship/5.png', alt: 'Introducing Leaseware Redesigned' },
-          { src: '/assets/internship/6.png', alt: 'ACH & Credit Card Payment Forms' },
+          { src: '/assets/leaseware/07.png', alt: 'Introducing Leaseware Redesigned' },
+          { src: '/assets/leaseware/08.png', alt: 'ACH & Credit Card Payment Forms' },
         ],
       },
       {
         id: 'learnings',
         label: 'Learnings',
         images: [
-          { src: '/assets/internship/7.png', alt: 'Internship Learnings & Retrospective' },
+          { src: '/assets/leaseware/09.png', alt: 'Internship Learnings & Retrospective' },
         ],
       },
     ],

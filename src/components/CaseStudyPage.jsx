@@ -113,29 +113,29 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
       </div>
 
       {/* 2. Main Case Study Layout (Sticky Sidebar + Image Track) */}
-      <div className="w-full max-w-[1536px] 2xl:max-w-[1600px] mx-auto pt-3 lg:pt-5 pb-8 px-2 sm:px-4 md:px-6 lg:pl-6 lg:pr-4 xl:pl-8 xl:pr-6 flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8 relative items-start">
+      <div className="w-full max-w-[1240px] xl:max-w-[1300px] 2xl:max-w-[1380px] mx-auto pt-2 lg:pt-4 pb-8 px-2 sm:px-4 md:px-6 lg:pl-6 lg:pr-4 xl:pl-6 xl:pr-6 flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8 relative items-start">
         
         {/* Left Sticky Sidebar (Desktop) */}
-        <aside className="hidden lg:flex flex-col w-[190px] xl:w-[220px] shrink-0 sticky top-5 self-start py-1 z-30">
+        <aside className="hidden lg:flex flex-col w-[175px] xl:w-[195px] shrink-0 sticky top-4 self-start py-1 z-30">
           
           {/* Back Link */}
           <button
             onClick={() => onNavigate('/#work')}
-            className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[16px] xl:text-[17px] mb-4 group self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[14.5px] xl:text-[15.5px] mb-3 group self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
-            <span className="transform group-hover:-translate-x-1 transition-transform text-[18px]">←</span>
+            <span className="transform group-hover:-translate-x-1 transition-transform text-[16px]">←</span>
             <span>Selected Work</span>
           </button>
 
           {/* Section Navigation Links (Max 5) */}
-          <nav className="flex flex-col relative border-l border-white/10 pl-3.5 space-y-1.5" aria-label="Case study sections">
+          <nav className="flex flex-col relative border-l border-white/10 pl-3.5 space-y-1" aria-label="Case study sections">
             {project.sections.map((section, idx) => {
               const isActive = activeSection === section.id;
               return (
                 <button
                   key={section.id}
                   onClick={() => handleScrollToSection(section.id)}
-                  className={`text-left text-[15.5px] xl:text-[16.5px] py-1 transition-all relative flex items-start group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm ${
+                  className={`text-left text-[14px] xl:text-[14.8px] py-1 transition-all relative flex items-start group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm ${
                     isActive
                       ? 'text-white font-medium'
                       : 'text-white/40 hover:text-white/80'
@@ -143,7 +143,7 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
                 >
                   <div className="flex items-baseline gap-2.5">
                     <span
-                      className={`text-[12.5px] xl:text-[13px] font-mono shrink-0 transition-colors ${
+                      className={`text-[11.5px] xl:text-[12px] font-mono shrink-0 transition-colors ${
                         isActive ? 'text-white' : 'text-white/30 group-hover:text-white/60'
                       }`}
                     >
@@ -154,7 +154,7 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
 
                   {/* Active Indicator Bar (White) */}
                   {isActive && (
-                    <span className="absolute -left-[15px] top-1/2 -translate-y-1/2 w-[3px] h-[18px] bg-white rounded-r" />
+                    <span className="absolute -left-[15px] top-1/2 -translate-y-1/2 w-[3px] h-[16px] bg-white rounded-r" />
                   )}
                 </button>
               );
@@ -162,7 +162,7 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
           </nav>
 
           {/* Sidebar Footer Hint */}
-          <div className="mt-6 pt-3 border-t border-white/10 text-white/30 text-[12px] leading-tight">
+          <div className="mt-5 pt-2.5 border-t border-white/10 text-white/30 text-[11px] leading-tight">
             Scroll to read or click to jump
           </div>
         </aside>

@@ -24,29 +24,29 @@ export default function Navbar({ onNavigate, isFixed = true, className = '', act
 
   return (
     <header className={`w-full bg-[#1e1e1e] ${isFixed ? 'sticky top-0 z-50' : 'relative z-30'} ${className}`}>
-      <div className="max-w-[1440px] xl:max-w-[1536px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[101px] h-[72px] sm:h-[80px] md:h-[88px] lg:h-[96px] xl:h-[113px] flex items-center justify-between">
+      <div className="max-w-[1240px] xl:max-w-[1320px] 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-14 xl:px-[80px] h-[64px] sm:h-[72px] md:h-[78px] lg:h-[84px] xl:h-[90px] flex items-center justify-between">
         {/* Monogram Logo */}
         <a 
           href="/" 
           onClick={(e) => handleLinkClick(e, '/')}
-          className="font-['Literata'] font-bold text-white text-[22px] md:text-[24.48px] tracking-tight hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+          className="font-['Literata'] font-bold text-white text-[20px] md:text-[22px] tracking-tight hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
         >
           NDC
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 lg:gap-10 xl:gap-[64.47px]">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 xl:gap-[48px]">
           <a
             href="/#work"
             onClick={(e) => handleLinkClick(e, '/#work')}
-            className="font-['Literata'] font-normal text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className="font-['Literata'] font-normal text-white text-[16px] lg:text-[17px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
             work
           </a>
           <a
             href="/#about"
             onClick={(e) => handleLinkClick(e, '/#about')}
-            className={`font-['Literata'] ${activePage === 'about' ? 'font-bold' : 'font-normal'} text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
+            className={`font-['Literata'] ${activePage === 'about' ? 'font-bold' : 'font-normal'} text-white text-[16px] lg:text-[17px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
           >
             about
           </a>
@@ -54,14 +54,14 @@ export default function Navbar({ onNavigate, isFixed = true, className = '', act
             href="https://drive.google.com/file/d/155VLI2z_D_3ok-rW9CxqazHdNSj6nop5/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-['Literata'] font-normal text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className="font-['Literata'] font-normal text-white text-[16px] lg:text-[17px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
             resume
           </a>
           <a
             href="/#connect"
             onClick={(e) => handleLinkClick(e, '/#connect')}
-            className="font-['Literata'] font-normal text-white text-[18px] lg:text-[20.4px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
+            className="font-['Literata'] font-normal text-white text-[16px] lg:text-[17px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm"
           >
             connect
           </a>
