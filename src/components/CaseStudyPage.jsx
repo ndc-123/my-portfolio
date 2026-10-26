@@ -219,9 +219,6 @@ export default function CaseStudyPage({ projectId, onNavigate }) {
         </main>
 
       </div>
-
-      {/* 4. Let's Connect Footer */}
-      <FooterSection />
     </div>
   );
 }

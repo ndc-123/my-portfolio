@@ -9,8 +9,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Stage keyboard performance',
     origW: 263,
     origH: 335,
-    cx: 0.105,
-    cy: 0.330,
+    cx: 0.080,
+    cy: 0.220,
     defaultZ: 10,
   },
   {
@@ -19,8 +19,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Keyboard performance with star trophy',
     origW: 295,
     origH: 363,
-    cx: 0.395,
-    cy: 0.178,
+    cx: 0.345,
+    cy: 0.145,
     defaultZ: 11,
   },
   {
@@ -29,8 +29,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Beach sunset horse buggy ride',
     origW: 276,
     origH: 343,
-    cx: 0.645,
-    cy: 0.190,
+    cx: 0.655,
+    cy: 0.155,
     defaultZ: 10,
   },
   {
@@ -39,8 +39,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Sand Castles and Paper Boats book',
     origW: 234,
     origH: 308,
-    cx: 0.900,
-    cy: 0.340,
+    cx: 0.920,
+    cy: 0.220,
     defaultZ: 11,
   },
   {
@@ -49,8 +49,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Surreal Moments book of poems',
     origW: 237,
     origH: 318,
-    cx: 0.180,
-    cy: 0.820,
+    cx: 0.160,
+    cy: 0.840,
     defaultZ: 12,
   },
   {
@@ -59,8 +59,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Homemade Tiramisu scoop',
     origW: 243,
     origH: 310,
-    cx: 0.520,
-    cy: 0.850,
+    cx: 0.500,
+    cy: 0.870,
     defaultZ: 11,
   },
   {
@@ -69,8 +69,8 @@ const COLLAGE_PHOTOS = [
     alt: 'Senior home keyboard performance and Seva Aarogya children',
     origW: 268,
     origH: 339,
-    cx: 0.830,
-    cy: 0.820,
+    cx: 0.840,
+    cy: 0.840,
     defaultZ: 10,
   },
 ];
@@ -80,7 +80,7 @@ const MOBILE_LAYOUT = {
   'photo-1-upper-left': { relX: 0.02, relY: 0.04, relW: 0.38, relH: 0.22 },
   'photo-2-top-center-left': { relX: 0.28, relY: 0.01, relW: 0.42, relH: 0.24 },
   'photo-3-top-center-right': { relX: 0.56, relY: 0.03, relW: 0.40, relH: 0.24 },
-  'photo-4-upper-right': { relX: 0.60, relY: 0.18, relW: 0.36, relH: 0.22 },
+  'photo-4-upper-right': { relX: 0.62, relY: 0.13, relW: 0.36, relH: 0.22 },
   'photo-5-lower-left': { relX: 0.02, relY: 0.74, relW: 0.38, relH: 0.23 },
   'photo-6-lower-center': { relX: 0.30, relY: 0.76, relW: 0.36, relH: 0.22 },
   'photo-7-lower-right': { relX: 0.58, relY: 0.73, relW: 0.38, relH: 0.23 },
@@ -95,7 +95,11 @@ const AMAZON_LINKS = {
 };
 
 // Default center heading content when not hovering or tapping any photo
-const DEFAULT_HEADING = 'Outside of work you’ll always find me creating';
+const DEFAULT_HEADING = (
+  <>
+    Things that make me, <em className="italic">me</em>
+  </>
+);
 
 // Dynamic text and action mapping for each photo card
 const PHOTO_CONTENT_MAP = {
@@ -459,9 +463,9 @@ export default function OutsideWorkSection() {
         onMouseLeave={handleCenterMouseLeave}
       >
         {/* Centered Heading with smooth quick fade and stable min-height to eliminate layout shifts */}
-        <div className="min-h-[58px] sm:min-h-[66px] md:min-h-[76px] lg:min-h-[86px] flex items-center justify-center w-full px-2 mb-4 sm:mb-5 md:mb-6 max-w-[850px] pointer-events-auto">
+        <div className="min-h-[58px] sm:min-h-[66px] md:min-h-[76px] lg:min-h-[86px] flex items-center justify-center w-full px-4 mb-4 sm:mb-5 md:mb-6 max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] xl:max-w-[680px] pointer-events-auto">
           <h2 
-            className={`font-['Afacad_Flux'] font-normal text-white text-[22px] sm:text-[26px] md:text-[32px] lg:text-[36px] xl:text-[40px] tracking-normal text-center leading-tight drop-shadow-md select-text transition-opacity duration-150 ease-in-out ${
+            className={`font-['Afacad_Flux'] font-normal text-white text-[20px] sm:text-[23px] md:text-[27px] lg:text-[31px] xl:text-[36px] tracking-normal text-center leading-snug drop-shadow-md select-text transition-opacity duration-150 ease-in-out ${
               fadeState === 'in' ? 'opacity-100' : 'opacity-0'
             }`}
           >

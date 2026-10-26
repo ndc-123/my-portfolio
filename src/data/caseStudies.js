@@ -117,7 +117,7 @@ export const CASE_STUDIES = {
     title: 'Strava',
     subtitle: 'Cognitive Ergonomics & Usability Redesign',
     tags: [
-      { text: 'Cognitive Ergonomics', bg: '#060606', color: '#ffffff' },
+      { text: 'Usability Testing', bg: '#060606', color: '#ffffff' },
       { text: 'Redesign', bg: '#91340d', color: '#ffffff' },
       { text: 'Fitness', bg: '#c8592a', color: '#ffffff' },
     ],

@@ -14,26 +14,26 @@ const projects = [
     align: 'left',
   },
   {
-    id: 2,
-    slug: '/projects/reloom',
-    title: '[2/4] How can we make people choose sustainability?',
-    image: '/assets/project-2-sustainability.png',
-    tags: [
-      { text: 'Sustainability', bg: '#e0d98e', color: '#1e1e1e' },
-      { text: 'Interaction Design', bg: '#f8ccbe', color: '#1e1e1e' },
-      { text: 'Fashion', bg: '#cfc1f1', color: '#1e1e1e' },
-    ],
-    align: 'right',
-  },
-  {
     id: 3,
     slug: '/projects/legacy-system',
-    title: '[3/4] How might we enhance user experiences of complex systems?',
+    title: '[2/4] How might we enhance user experiences of complex systems?',
     image: '/assets/cover LW.png',
     tags: [
       { text: 'Internship', bg: '#86aab5', color: '#1e1e1e' },
       { text: 'B2B workflows', bg: '#d4e8fb', color: '#1e1e1e' },
       { text: 'Fintech', bg: '#fdfffe', color: '#1e1e1e' },
+    ],
+    align: 'right',
+  },
+  {
+    id: 2,
+    slug: '/projects/reloom',
+    title: '[3/4] How can we make people choose sustainability?',
+    image: '/assets/project-2-sustainability.png',
+    tags: [
+      { text: 'Sustainability', bg: '#e0d98e', color: '#1e1e1e' },
+      { text: 'Interaction Design', bg: '#f8ccbe', color: '#1e1e1e' },
+      { text: 'Fashion', bg: '#cfc1f1', color: '#1e1e1e' },
     ],
     align: 'left',
   },
@@ -43,7 +43,7 @@ const projects = [
     title: '[4/4] How can we make performance tracking in Strava feel more effortless?',
     image: '/assets/project-3-strava.png',
     tags: [
-      { text: 'Cognitive Ergonomics', bg: '#060606', color: '#ffffff' },
+      { text: 'Usability Testing', bg: '#060606', color: '#ffffff' },
       { text: 'Redesign', bg: '#91340d', color: '#ffffff' },
       { text: 'Fitness', bg: '#c8592a', color: '#ffffff' },
     ],

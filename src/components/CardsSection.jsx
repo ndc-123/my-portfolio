@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playCardFlipSound } from '../utils/cardAudio';
 
 // Reusable Playing Card Front Component
 function PlayingCard({
@@ -53,8 +54,8 @@ function PlayingCard({
       )}
 
       {/* Large Suit Silhouette at Bottom Left */}
-      <div className="absolute left-[-38px] top-[122px] w-[152px] h-[178px] pointer-events-none opacity-95">
-        <img src={suitIcon} alt="" className="size-full object-contain" />
+      <div className="absolute left-[-38px] bottom-[-1px] w-[152px] h-[178px] pointer-events-none opacity-95">
+        <img src={suitIcon} alt="" className="size-full object-contain object-bottom" />
       </div>
 
       {/* Vertical Rotated Title on Right Side */}
@@ -77,7 +78,7 @@ function CardBack({
   rank = 'K',
   rankColor = '#080808',
   smallSuitIcon = null,
-  suitPos = { left: '62px', top: '14px', width: '22px', height: '26px' },
+  suitPos = { left: '38px', top: '14px', width: '22px', height: '26px' },
   starIcon = null,
   description = '',
   className = '',
@@ -173,22 +174,34 @@ function CardBack({
 function FlippableCard({
   front,
   back,
+  id = 'card',
   className = '',
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
+  const handleFlip = (targetState) => {
+    setIsFlipped((current) => {
+      const next = typeof targetState === 'function' ? targetState(current) : targetState;
+      if (next !== current) {
+        playCardFlipSound(id);
+      }
+      return next;
+    });
+  };
+
   return (
     <div
+      id={id}
       className={`group/card relative w-[218px] h-[305px] shrink-0 select-none cursor-pointer [perspective:1000px] ${className}`}
-      onMouseEnter={() => setIsFlipped(true)}
-      onMouseLeave={() => setIsFlipped(false)}
-      onClick={() => setIsFlipped((prev) => !prev)}
+      onMouseEnter={() => handleFlip(true)}
+      onMouseLeave={() => handleFlip(false)}
+      onClick={() => handleFlip((prev) => !prev)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          setIsFlipped((prev) => !prev);
+          handleFlip((prev) => !prev);
         }
       }}
       aria-label="Interactive flippable card"
@@ -237,6 +250,16 @@ function StackedCardColumn4() {
   const [isHeartFlipped, setIsHeartFlipped] = useState(false);
   const [isSwapped, setIsSwapped] = useState(false);
 
+  const handleHeartFlip = (targetState) => {
+    setIsHeartFlipped((current) => {
+      const next = typeof targetState === 'function' ? targetState(current) : targetState;
+      if (next !== current) {
+        playCardFlipSound('heart-card');
+      }
+      return next;
+    });
+  };
+
   // Hidden card (Joker / Agent) slot styling
   const jokerSlotStyle = {
     transform: isSwapped ? 'translateY(70px)' : 'translateY(0px)',
@@ -275,7 +298,7 @@ function StackedCardColumn4() {
       className="relative w-[218px] h-[375px] shrink-0 select-none [perspective:1000px]"
       onMouseLeave={() => {
         setIsSwapped(false);
-        setIsHeartFlipped(false);
+        handleHeartFlip(false);
       }}
       role="region"
       aria-label="Stacked playing cards: Heart and Joker with interactive flip and swap"
@@ -330,11 +353,11 @@ function StackedCardColumn4() {
         <div
           className="absolute top-0 left-0 w-full h-[70px] z-30 cursor-pointer"
           onMouseEnter={() => {
-            setIsHeartFlipped(false);
+            handleHeartFlip(false);
             setIsSwapped(true);
           }}
           onClick={() => {
-            setIsHeartFlipped(false);
+            handleHeartFlip(false);
             setIsSwapped(true);
           }}
           aria-label="Hover directly over the hidden card to swap and flip"
@@ -347,15 +370,15 @@ function StackedCardColumn4() {
         style={heartSlotStyle}
         onMouseEnter={() => {
           if (!isSwapped) {
-            setIsHeartFlipped(true);
+            handleHeartFlip(true);
           }
         }}
         onMouseLeave={() => {
-          setIsHeartFlipped(false);
+          handleHeartFlip(false);
         }}
         onClick={() => {
           if (!isSwapped) {
-            setIsHeartFlipped((prev) => !prev);
+            handleHeartFlip((prev) => !prev);
           }
         }}
       >
@@ -377,7 +400,7 @@ function StackedCardColumn4() {
               rank="K"
               rankColor="#7d0f0f"
               suitIcon="/assets/heart-suit.svg"
-              title="For the people"
+              title="Design for the People"
               titleColor="#7d0f0f"
             />
           </div>
@@ -419,7 +442,7 @@ export default function CardsSection() {
         aria-hidden="true"
       />
 
-      <div className="relative max-w-[1200px] xl:max-w-[1280px] 2xl:max-w-[1380px] mx-auto z-10 flex flex-col gap-6 sm:gap-10 md:gap-[42px] xl:gap-[52px] items-start">
+      <div className="relative w-full max-w-[1200px] xl:max-w-[1280px] 2xl:max-w-[1380px] mx-auto z-10 flex flex-col gap-6 sm:gap-10 md:gap-[42px] xl:gap-[52px]">
         
         {/* Section Heading */}
         <h2 className="font-['Afacad_Flux'] font-normal text-white text-[24px] sm:text-[27px] md:text-[29px] tracking-wide">
@@ -431,6 +454,7 @@ export default function CardsSection() {
           
           {/* Card 1: Club (Unravelling Complexity) -> Flips on Hover to reveal K back */}
           <FlippableCard
+            id="card-club"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -447,7 +471,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#080808"
                 smallSuitIcon="/assets/club-suit.svg"
-                suitPos={{ left: '62px', top: '14px', width: '22px', height: '26px' }}
+                suitPos={{ left: '38px', top: '14px', width: '22px', height: '26px' }}
                 description="Breaking down complex procceses, mapping dependencies, and streamlining interactions."
               />
             }
@@ -455,6 +479,7 @@ export default function CardsSection() {
 
           {/* Card 2: Diamond (Better Experiences) -> Flips on Hover to reveal K back */}
           <FlippableCard
+            id="card-diamond"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -479,6 +504,7 @@ export default function CardsSection() {
 
           {/* Card 3: Spade (Problem solving) -> Flips on Hover to reveal K back */}
           <FlippableCard
+            id="card-spade"
             front={
               <PlayingCard
                 bg="#f6e0c5"
@@ -507,8 +533,9 @@ export default function CardsSection() {
         </div>
 
         {/* Responsive Layout for Tablets / Mobile: Flippable on hover / tap */}
-        <div className="xl:hidden flex flex-nowrap gap-5 sm:gap-6 overflow-x-auto pb-6 pt-2 px-4 sm:px-6 md:px-16 -mx-4 sm:-mx-6 md:-mx-16 no-scrollbar snap-x snap-mandatory w-auto max-w-none">
+        <div className="xl:hidden flex flex-nowrap gap-5 sm:gap-6 overflow-x-auto pb-6 pt-2 px-4 sm:px-6 md:px-12 lg:px-14 -mx-4 sm:-mx-6 md:-mx-12 lg:-mx-14 no-scrollbar snap-x snap-mandatory w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] md:w-[calc(100%+6rem)] lg:w-[calc(100%+7rem)] max-w-none touch-pan-x [overscroll-behavior-x:contain] [-webkit-overflow-scrolling:touch]">
           <FlippableCard
+            id="m-card-club"
             className="snap-center"
             front={
               <PlayingCard
@@ -526,13 +553,14 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#080808"
                 smallSuitIcon="/assets/club-suit.svg"
-                suitPos={{ left: '62px', top: '14px', width: '22px', height: '26px' }}
+                suitPos={{ left: '38px', top: '14px', width: '22px', height: '26px' }}
                 description="Breaking down complex procceses, mapping dependencies, and streamlining interactions."
               />
             }
           />
 
           <FlippableCard
+            id="m-card-diamond"
             className="snap-center"
             front={
               <PlayingCard
@@ -557,6 +585,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            id="m-card-spade"
             className="snap-center"
             front={
               <PlayingCard
@@ -581,6 +610,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            id="m-card-heart"
             className="snap-center"
             front={
               <PlayingCard
@@ -588,7 +618,7 @@ export default function CardsSection() {
                 rank="K"
                 rankColor="#7d0f0f"
                 suitIcon="/assets/heart-suit.svg"
-                title="For the people"
+                title="Design for the People"
                 titleColor="#7d0f0f"
               />
             }
@@ -605,6 +635,7 @@ export default function CardsSection() {
           />
 
           <FlippableCard
+            id="m-card-joker"
             className="snap-center"
             front={
               <PlayingCard
@@ -623,6 +654,9 @@ export default function CardsSection() {
               />
             }
           />
+
+          {/* End spacer to ensure the last card can be fully scrolled into view without clipping */}
+          <div className="shrink-0 w-4 sm:w-6 md:w-12 lg:w-14" aria-hidden="true" />
         </div>
 
       </div>
