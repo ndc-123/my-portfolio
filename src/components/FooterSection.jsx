@@ -19,7 +19,7 @@ export default function FooterSection() {
   return (
     <footer 
       id="connect" 
-      className="w-full bg-[#1e1e1e] pt-[60px] sm:pt-[75px] md:pt-[90px] xl:pt-[105px] pb-[70px] sm:pb-[85px] md:pb-[100px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[95px] relative overflow-hidden"
+      className="w-full bg-[#1e1e1e] pt-[60px] sm:pt-[75px] md:pt-[90px] xl:pt-[105px] pb-[70px] sm:pb-[85px] md:pb-[100px] px-4 sm:px-6 md:px-12 lg:px-16 xl:px-[95px] relative z-20 overflow-hidden"
     >
       <div className="max-w-[1200px] xl:max-w-[1280px] 2xl:max-w-[1380px] mx-auto flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-8 relative">
         

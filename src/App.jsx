@@ -28,10 +28,15 @@ export default function App() {
   useEffect(() => {
     if (window.location.hash && currentPath === '/') {
       const hash = window.location.hash.substring(1);
-      const el = document.getElementById(hash);
-      if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
-      }
+      const scrollToElement = (attempts = 0) => {
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else if (attempts < 15) {
+          setTimeout(() => scrollToElement(attempts + 1), 60);
+        }
+      };
+      setTimeout(() => scrollToElement(), 120);
     }
   }, [currentPath]);
 
@@ -63,30 +68,27 @@ export default function App() {
     const [path, hash] = to.split('#');
     const targetPath = path || '/';
 
+    const performScroll = (attempts = 0) => {
+      if (!hash) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        return;
+      }
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else if (attempts < 15) {
+        setTimeout(() => performScroll(attempts + 1), 60);
+      }
+    };
+
     if (window.location.pathname !== targetPath) {
       window.history.pushState({}, '', to);
       setCurrentPath(targetPath);
-      if (hash) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        const scrollToHash = (attempts = 0) => {
-          const el = document.getElementById(hash);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          } else if (attempts < 10) {
-            setTimeout(() => scrollToHash(attempts + 1), 50);
-          }
-        };
-        setTimeout(() => scrollToHash(), 80);
-      } else {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
+      setTimeout(() => performScroll(), 100);
     } else {
       if (hash) {
         window.history.pushState({}, '', to);
-        const el = document.getElementById(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
+        performScroll();
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }

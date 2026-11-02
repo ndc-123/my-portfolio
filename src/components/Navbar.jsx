@@ -44,8 +44,8 @@ export default function Navbar({ onNavigate, isFixed = true, className = '', act
             work
           </a>
           <a
-            href="/#about"
-            onClick={(e) => handleLinkClick(e, '/#about')}
+            href="/about"
+            onClick={(e) => handleLinkClick(e, '/about')}
             className={`font-['Literata'] ${activePage === 'about' ? 'font-bold' : 'font-normal'} text-white text-[16px] lg:text-[17px] transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
           >
             about
@@ -101,8 +101,8 @@ export default function Navbar({ onNavigate, isFixed = true, className = '', act
             work
           </a>
           <a
-            href="/#about"
-            onClick={(e) => handleLinkClick(e, '/#about')}
+            href="/about"
+            onClick={(e) => handleLinkClick(e, '/about')}
             className={`font-['Literata'] ${activePage === 'about' ? 'font-bold' : 'font-normal'} text-white text-[18px] py-2 px-1 hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded-sm`}
           >
             about

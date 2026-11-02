@@ -390,99 +390,103 @@ export default function OutsideWorkSection() {
   };
 
   return (
-    <section 
+    <div 
       id="about" 
-      ref={boardRef}
-      style={{
-        height: '100dvh',
-        minHeight: '560px',
-        maxHeight: '1080px',
-      }}
-      className="w-full relative overflow-hidden select-none z-20 m-0 p-0"
-      aria-label="Outside of work photo collage"
-      onClick={handleBackgroundClick}
-      onMouseLeave={handleSectionMouseLeave}
+      className="relative w-full z-20 bg-[#1d1d1d]"
+      style={{ height: '175vh' }}
     >
-      {/* Dark Charcoal Repeating Checkerboard Pattern (#1d1d1d & #222222) */}
-      <div 
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ 
-          backgroundColor: '#1d1d1d',
-          backgroundImage: `conic-gradient(
-            #222222 90deg, 
-            #1d1d1d 90deg 180deg, 
-            #222222 180deg 270deg, 
-            #1d1d1d 270deg
-          )`,
-          backgroundSize: '64px 64px',
+      <section 
+        ref={boardRef}
+        style={{
+          height: '100dvh',
+          minHeight: '560px',
         }}
-        aria-hidden="true"
-      />
-
-      {/* Floating Photo Collage: 7 intact photo prints fully visible within cards */}
-      {COLLAGE_PHOTOS.map((photo) => {
-        const photoInfo = PHOTO_CONTENT_MAP[photo.id];
-        const isAnthology = Boolean(photoInfo?.amazonLink);
-
-        return (
-          <div
-            key={photo.id}
-            data-card="true"
-            data-cursor={isAnthology ? 'Buy on Amazon' : undefined}
-            onPointerDown={(e) => handlePointerDown(photo.id, e)}
-            onMouseEnter={() => handleCardMouseEnter(photo.id)}
-            onMouseLeave={handleCardMouseLeave}
-            onClick={(e) => handleCardClick(photo.id, e)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleCardClick(photo.id, e);
-              }
-            }}
-            tabIndex={0}
-            role={isAnthology ? 'link' : 'button'}
-            aria-label={isAnthology ? `${photo.alt} - Buy on Amazon` : photo.alt}
-            style={getCardStyle(photo)}
-            className="absolute select-none will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-          >
-            {/* Complete photo card fully visible with object-contain (no cropping/clipping) */}
-            <img 
-              src={photo.src}
-              alt={photo.alt}
-              className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
-              draggable={false}
-            />
-          </div>
-        );
-      })}
-
-      {/* Centered Content: Dynamic Heading & Static Button placed cleanly in central space */}
-      <div 
-        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-4"
-        onMouseEnter={handleCenterMouseEnter}
-        onMouseLeave={handleCenterMouseLeave}
+        className="sticky top-0 w-full overflow-hidden select-none z-20 m-0 p-0 bg-[#1d1d1d]"
+        aria-label="Outside of work photo collage"
+        onClick={handleBackgroundClick}
+        onMouseLeave={handleSectionMouseLeave}
       >
-        {/* Centered Heading with smooth quick fade and stable min-height to eliminate layout shifts */}
-        <div className="min-h-[58px] sm:min-h-[66px] md:min-h-[76px] lg:min-h-[86px] flex items-center justify-center w-full px-4 mb-4 sm:mb-5 md:mb-6 max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] xl:max-w-[680px] pointer-events-auto">
-          <h2 
-            className={`font-['Afacad_Flux'] font-normal text-white text-[20px] sm:text-[23px] md:text-[27px] lg:text-[31px] xl:text-[36px] tracking-normal text-center leading-snug drop-shadow-md select-text transition-opacity duration-150 ease-in-out ${
-              fadeState === 'in' ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {displayedHeading}
-          </h2>
-        </div>
+        {/* Dark Charcoal Repeating Checkerboard Pattern (#1d1d1d & #222222) */}
+        <div 
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ 
+            backgroundColor: '#1d1d1d',
+            backgroundImage: `conic-gradient(
+              #222222 90deg, 
+              #1d1d1d 90deg 180deg, 
+              #222222 180deg 270deg, 
+              #1d1d1d 270deg
+            )`,
+            backgroundSize: '64px 64px',
+          }}
+          aria-hidden="true"
+        />
 
-        {/* Existing Centered Button: Unchanged appearance, position, styling, and functionality */}
-        <a
-          href="https://www.instagram.com/nehadc_art/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-['Literata'] font-normal text-white text-[14px] sm:text-[16px] md:text-[17px] bg-[#222222]/90 hover:bg-[#2c2c2c] active:scale-95 border border-white/80 rounded-[8px] px-6 sm:px-7 py-1.5 sm:py-2 transition-all duration-200 shadow-md hover:shadow-lg pointer-events-auto no-underline inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+        {/* Floating Photo Collage: 7 intact photo prints fully visible within cards */}
+        {COLLAGE_PHOTOS.map((photo) => {
+          const photoInfo = PHOTO_CONTENT_MAP[photo.id];
+          const isAnthology = Boolean(photoInfo?.amazonLink);
+
+          return (
+            <div
+              key={photo.id}
+              data-card="true"
+              data-cursor={isAnthology ? 'Buy on Amazon' : undefined}
+              onPointerDown={(e) => handlePointerDown(photo.id, e)}
+              onMouseEnter={() => handleCardMouseEnter(photo.id)}
+              onMouseLeave={handleCardMouseLeave}
+              onClick={(e) => handleCardClick(photo.id, e)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleCardClick(photo.id, e);
+                }
+              }}
+              tabIndex={0}
+              role={isAnthology ? 'link' : 'button'}
+              aria-label={isAnthology ? `${photo.alt} - Buy on Amazon` : photo.alt}
+              style={getCardStyle(photo)}
+              className="absolute select-none will-change-transform outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            >
+              {/* Complete photo card fully visible with object-contain (no cropping/clipping) */}
+              <img 
+                src={photo.src}
+                alt={photo.alt}
+                className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
+                draggable={false}
+              />
+            </div>
+          );
+        })}
+
+        {/* Centered Content: Dynamic Heading & Static Button placed cleanly in central space */}
+        <div 
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-4"
+          onMouseEnter={handleCenterMouseEnter}
+          onMouseLeave={handleCenterMouseLeave}
         >
-          What I've been creating
-        </a>
-      </div>
-    </section>
+          {/* Centered Heading with smooth quick fade and stable min-height to eliminate layout shifts */}
+          <div className="min-h-[58px] sm:min-h-[66px] md:min-h-[76px] lg:min-h-[86px] flex items-center justify-center w-full px-4 mb-4 sm:mb-5 md:mb-6 max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] xl:max-w-[680px] pointer-events-auto">
+            <h2 
+              className={`font-['Afacad_Flux'] font-normal text-white text-[20px] sm:text-[23px] md:text-[27px] lg:text-[31px] xl:text-[36px] tracking-normal text-center leading-snug drop-shadow-md select-text transition-opacity duration-150 ease-in-out ${
+                fadeState === 'in' ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {displayedHeading}
+            </h2>
+          </div>
+
+          {/* Existing Centered Button: Unchanged appearance, position, styling, and functionality */}
+          <a
+            href="https://www.instagram.com/nehadc_art/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-['Literata'] font-normal text-white text-[14px] sm:text-[16px] md:text-[17px] bg-[#222222]/90 hover:bg-[#2c2c2c] active:scale-95 border border-white/80 rounded-[8px] px-6 sm:px-7 py-1.5 sm:py-2 transition-all duration-200 shadow-md hover:shadow-lg pointer-events-auto no-underline inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+          >
+            What I've been creating
+          </a>
+        </div>
+      </section>
+    </div>
   );
 }
